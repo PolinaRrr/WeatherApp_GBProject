@@ -10,18 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp_gbproject.viewmodel.MainViewModel
 import com.example.weatherapp_gbproject.databinding.FragmentMainBinding
 import com.example.weatherapp_gbproject.viewmodel.AppState
+import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
 
-    //TODO: обработка кейса текущей памяти
-    lateinit var binding: FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,31 +48,39 @@ class MainFragment : Fragment() {
         when (data) {
             is AppState.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                //TODO() Snackbar "Success ${data.error}"
+                binding.let {
+                    Snackbar.make(it.mainView, "FATAL ERROR  ${data.error}", Snackbar.LENGTH_LONG)
+                        .setAction(
+                            "RETRY"
+                        ) { ViewModelProvider(this).get(MainViewModel::class.java).getWeather() }
+                        .show()
+                }
+
             }
             is AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
-                //TODO() Snackbar= "Loading"
             }
             is AppState.Success -> {
                 binding.loadingLayout.visibility = View.GONE
                 binding.textViewLocality.text = data.weatherInfo.city.locality
                 binding.textViewCondition.text = data.weatherInfo.condition
-                binding.textViewTemperature.text = "${data.weatherInfo.temp.toString()+"℃"}"
-                binding.textViewTemperatureFeelLike.text = "${data.weatherInfo.feels_like.toString()+"℃"}"
-                binding.textViewWindSpeed.text = "${data.weatherInfo.wind_speed.toString() + "mps"}"
+                binding.textViewTemperature.text = "${data.weatherInfo.temp.toString() + "℃"}"
+                binding.textViewTemperatureFeelLike.text =
+                    "${data.weatherInfo.feels_like.toString() + "℃"}"
+                binding.textViewWindSpeed.text =
+                    "${data.weatherInfo.wind_speed.toString() + "mps"}"
                 binding.textViewWindDir.text = data.weatherInfo.wind_dir
-                binding.textViewPressureMm.text = "${data.weatherInfo.pressure_mm.toString() + "mmHg"}"
+                binding.textViewPressureMm.text =
+                    "${data.weatherInfo.pressure_mm.toString() + "mmHg"}"
 
-                //TODO() Snackbar "Success"
             }
-            null -> TODO()
+            null -> binding.loadingLayout.visibility = View.VISIBLE
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //binding = null
+        _binding = null
     }
 
     companion object {

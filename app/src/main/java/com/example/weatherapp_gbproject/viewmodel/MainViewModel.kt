@@ -13,20 +13,23 @@ class MainViewModel(
 ) : ViewModel() {
 
     //кастомная функция возвращает лайвдейту
-    fun getData(): LiveData<AppState>{
+    fun getData(): LiveData<AppState> {
         return liveDate
     }
 
-    fun getWeather(){
+    fun getWeather() {
 
-        Thread{
+        Thread {
             liveDate.postValue(AppState.Loading)
-            //TODO answer from server and local storage
-
-            val answerFromLocalStorage = repository.getWeatherFromLocalStorage()
-            val answerFromServer = repository.getWeatherFromServer()
-            // передавать ответ в аргументе
-            liveDate.postValue(AppState.Success(repository.getWeatherFromServer()))
+            if ((0..10).random() < 5) {
+                liveDate.postValue(AppState.Error(ExceptionInInitializerError()))
+            } else {
+                if ((0..10).random() < 10) {
+                    liveDate.postValue(AppState.Success(repository.getWeatherFromServer()))
+                } else {
+                    liveDate.postValue(AppState.Success(repository.getWeatherFromLocalStorage()))
+                }
+            }
         }.start()
     }
 
