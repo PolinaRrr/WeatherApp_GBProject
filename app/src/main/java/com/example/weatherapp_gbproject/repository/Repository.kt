@@ -1,6 +1,7 @@
 package com.example.weatherapp_gbproject.repository
 
 interface Repository {
-    fun getWeatherFromLocalStorage(): WeatherInfo
-    fun getWeatherFromServer():WeatherInfo
+    fun getWorldWeatherLocalStorage(): List<WeatherInfo>
+    fun getRussianWeatherLocalStorage(): List<WeatherInfo>
+    fun getWeatherFromFromServer():WeatherInfo
 }
