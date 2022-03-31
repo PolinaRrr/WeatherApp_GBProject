@@ -9,7 +9,6 @@ import com.example.weatherapp_gbproject.repository.WeatherInfo
 import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_WEATHER
 import com.example.weatherapp_gbproject.databinding.FragmentDetailsWeatherBinding
 
-
 class DetailsWeatherFragment : Fragment() {
 
     private var _binding: FragmentDetailsWeatherBinding? = null
@@ -27,13 +26,11 @@ class DetailsWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO let
-        val weather: WeatherInfo =
-            requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER)!!
-        renderData(weather)
+        arguments?.let { requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER) }
+            ?.let { renderData(it) }
     }
 
-    fun renderData(weather: WeatherInfo) {
+    private fun renderData(weather: WeatherInfo) {
         binding.loadingLayout.visibility = View.GONE
         binding.textViewLocality.text = weather.city.locality.toString()
         binding.textViewCondition.text = weather.condition.toString()

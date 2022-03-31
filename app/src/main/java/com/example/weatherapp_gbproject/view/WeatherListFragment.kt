@@ -21,8 +21,8 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     private var _binding: FragmentWeatherListBinding? = null
     private val binding get() = _binding!!
 
-    //TODO private
-    val weatherListAdapter = WeatherListAdapter(this)
+
+    private val weatherListAdapter = WeatherListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,9 +33,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         return binding.root
     }
 
-
-    //TODO private
-    var isRussian = true
+    private var isRussian = true
 
     fun getIsRussian(): Boolean {
         return isRussian
@@ -108,21 +106,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             is AppState.Success -> {
                 binding.loadingLayout.visibility = View.GONE
                 weatherListAdapter.setData(data.weatherInfoList)
-
-
-//                binding.textViewLocality.text = data.weatherInfoList.city.locality
-//                binding.textViewCondition.text = data.weatherInfoList.condition
-//                binding.textViewTemperature.text = "${data.weatherInfoList.temp.toString() + "℃"}"
-//                binding.textViewTemperatureFeelLike.text =
-//                    "${data.weatherInfoList.feels_like.toString() + "℃"}"
-//                binding.textViewWindSpeed.text =
-//                    "${data.weatherInfoList.wind_speed.toString() + "mps"}"
-//                binding.textViewWindDir.text = data.weatherInfoList.wind_dir
-//                binding.textViewPressureMm.text =
-//                    "${data.weatherInfoList.pressure_mm.toString() + "mmHg"}"
-
             }
-            //null -> binding.loadingLayout.visibility = View.VISIBLE
         }
     }
 
