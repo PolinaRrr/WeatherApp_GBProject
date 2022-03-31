@@ -68,7 +68,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
                         R.drawable.icon_russia_flag
                     )
                 )
-
             } else {
                 binding.floatingActionButton.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -143,8 +142,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         requireActivity().supportFragmentManager.beginTransaction()
             .add(R.id.main_container, DetailsWeatherFragment.newInstance(bundle))
             .addToBackStack("").commit()
-
-
     }
 }
 
