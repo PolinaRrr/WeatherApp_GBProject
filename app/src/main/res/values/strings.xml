@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">WeatherApp_GBProject</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textView_locality">Locality</string>
+    <string name="textView_temperatureSign">℃</string>
+    <string name="textView_text_feelLike">Feels like</string>
+    <string name="textView_condition">Weather</string>
+    <string name="textView_text_wind">Wind</string>
+    <string name="textView_wind_speed">mps</string>
+    <string name="textView_wind_dir">direction</string>
+    <string name="textView_pressure">Atmospheric pressure</string>
+    <string name="textView_pressure_mm">mmHG</string>
+
 </resources>

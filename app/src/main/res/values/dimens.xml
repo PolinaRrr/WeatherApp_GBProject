@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textSize_textView_locality">40sp</dimen>
+    <dimen name="textSize_textView_temperature">50sp</dimen>
+    <dimen name="textSize_textView_text">20sp</dimen>
+    <dimen name="textSize_textView_condition">30sp</dimen>
+</resources>
