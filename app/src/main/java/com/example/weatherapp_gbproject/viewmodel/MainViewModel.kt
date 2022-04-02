@@ -21,16 +21,15 @@ class MainViewModel(
 
     private fun getWeather(isRussianCity: Boolean) {
         Thread {
-            //liveDate.postValue(AppState.Loading)
-//            if ((0..10).random() < 5) {
-//            } else {
+            if ((0..10).random() < 5) {
+                liveDate.postValue(AppState.Error(ExceptionInInitializerError()))
+            } else {
                 if (isRussianCity) {
                     liveDate.postValue(AppState.Success(repository.getRussianWeatherLocalStorage()))
                 } else {
                     liveDate.postValue(AppState.Success(repository.getWorldWeatherLocalStorage()))
                 }
-           // }
+            }
         }.start()
     }
-
 }
