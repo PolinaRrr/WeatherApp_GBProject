@@ -31,9 +31,8 @@ class WeatherListAdapter(
         return CityHolder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: CityHolder, position: Int) {
-        holder.bind(data[position])
-    }
+    override fun onBindViewHolder(holder: CityHolder, position: Int) = holder.bind(data[position])
+
 
     override fun getItemCount() = data.size
 
@@ -42,7 +41,7 @@ class WeatherListAdapter(
             val binding = FragmentWeatherListRecycleItemBinding.bind(itemView)
                 .apply { textViewCityName.text = weather.city.locality }
             binding.root.setOnClickListener {
-                onItemListClickListener.OnItemListClick(weather)
+                onItemListClickListener.onItemListClick(weather)
             }
         }
     }

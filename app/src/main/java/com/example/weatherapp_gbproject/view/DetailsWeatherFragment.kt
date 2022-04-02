@@ -19,7 +19,7 @@ class DetailsWeatherFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentDetailsWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -32,12 +32,12 @@ class DetailsWeatherFragment : Fragment() {
 
     private fun renderData(weather: WeatherInfo) {
         binding.loadingLayout.visibility = View.GONE
-        binding.textViewLocality.text = weather.city.locality.toString()
-        binding.textViewCondition.text = weather.condition.toString()
+        binding.textViewLocality.text = weather.city.locality
+        binding.textViewCondition.text = weather.condition
         binding.textViewTemperature.text = weather.temp.toString()
         binding.textViewTemperatureFeelLike.text = weather.feels_like.toString()
         binding.textViewWindSpeed.text = weather.wind_speed.toString()
-        binding.textViewWindDir.text = weather.wind_dir.toString()
+        binding.textViewWindDir.text = weather.wind_dir
         binding.textViewPressureMm.text = weather.pressure_mm.toString()
     }
 
