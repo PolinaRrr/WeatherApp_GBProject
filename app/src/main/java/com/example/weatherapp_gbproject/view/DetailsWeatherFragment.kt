@@ -27,18 +27,20 @@ class DetailsWeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let { requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER) }
-            ?.let { renderData(it) }
+            ?.run { renderWeatherData(this) }
     }
 
-    private fun renderData(weather: WeatherInfo) {
-        binding.loadingLayout.visibility = View.GONE
-        binding.textViewLocality.text = weather.city.locality
-        binding.textViewCondition.text = weather.condition
-        binding.textViewTemperature.text = weather.temp.toString()
-        binding.textViewTemperatureFeelLike.text = weather.feels_like.toString()
-        binding.textViewWindSpeed.text = weather.wind_speed.toString()
-        binding.textViewWindDir.text = weather.wind_dir
-        binding.textViewPressureMm.text = weather.pressure_mm.toString()
+    private fun renderWeatherData(weather: WeatherInfo) {
+        with(binding) {
+            binding.loadingLayout.visibility = View.GONE
+            binding.textViewLocality.text = weather.city.locality
+            binding.textViewCondition.text = weather.condition
+            binding.textViewTemperature.text = weather.temp.toString()
+            binding.textViewTemperatureFeelLike.text = weather.feels_like.toString()
+            binding.textViewWindSpeed.text = weather.wind_speed.toString()
+            binding.textViewWindDir.text = weather.wind_dir
+            binding.textViewPressureMm.text = weather.pressure_mm.toString()
+        }
     }
 
     override fun onDestroy() {
@@ -48,11 +50,9 @@ class DetailsWeatherFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(bundle: Bundle): DetailsWeatherFragment {
-            val fragment = DetailsWeatherFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
+        fun newInstance(bundle: Bundle) = DetailsWeatherFragment()
+            .apply { arguments = bundle }
+
     }
 }
 
