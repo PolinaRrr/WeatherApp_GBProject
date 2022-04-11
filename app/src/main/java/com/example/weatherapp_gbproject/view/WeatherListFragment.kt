@@ -22,7 +22,9 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     private val binding get() = _binding!!
 
 
-    private val weatherListAdapter = WeatherListAdapter(this)
+    private val weatherListAdapter: WeatherListAdapter by lazy {
+        WeatherListAdapter(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,79 +37,82 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
     private var isRussian = true
 
-    /*fun getIsRussian(): Boolean {
-        return isRussian
-    }*/
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // HW вынести в initRecycler()
         initRecyclerView()
-
-        //ссылка на уже существующую вьюмодел
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         //ссылка на ответ, который в случае изменения/обновления объекта лайвдейты, вызовет рендер нового значения
         val observer =
             Observer<AppState> { data -> renderData(data) }
         //подписка на лайвдейту мейнфрагментом, чтобы пока жив фрагмент, ловить изменения
         viewModel.getData().observe(viewLifecycleOwner, observer)
 
-        binding.floatingActionButton.setOnClickListener {
-            isRussian = !isRussian
-            if (isRussian) {
-                viewModel.getRussianWeather()
-                binding.floatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.icon_russia_flag
-                    )
-                )
-            } else {
-                binding.floatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.icon_weather_world
-                    )
-                )
-                viewModel.getWorldWeather()
-            }
-        }
+
         viewModel.getRussianWeather()
     }
 
     private fun initRecyclerView() {
-        binding.recyclerView.adapter = weatherListAdapter
+        with(binding) {
+            binding.recyclerView.adapter = weatherListAdapter
+            binding.floatingActionButton.setOnClickListener {
+                renderLocality()
+            }
+        }
+    }
+
+    private fun renderLocality() {
+        isRussian = !isRussian
+        if (isRussian) {
+            viewModel.getRussianWeather()
+            binding.floatingActionButton.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.icon_russia_flag
+                )
+            )
+
+        } else {
+            viewModel.getWorldWeather()
+            binding.floatingActionButton.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.icon_weather_world
+                )
+            )
+        }
     }
 
     private fun renderData(data: AppState) {
-        when (data) {
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
-                binding.let {
-                    Snackbar.make(it.root, "FATAL ERROR  ${data.error}", Snackbar.LENGTH_LONG)
-                        .setAction(
-                            "RETRY"
-                        ) {
-                            if (isRussian) {
-                                ViewModelProvider(this).get(MainViewModel::class.java)
-                                    .getRussianWeather()
-                            } else {
-                                ViewModelProvider(this).get(MainViewModel::class.java)
-                                    .getWorldWeather()
-                            }
-                        }.show()
+        with(binding) {
+            when (data) {
+                is AppState.Error -> {
+                    loadingLayout.visibility = View.GONE
+                    root.setRetry("FATAL ERROR  ${data.error}", "RETRY", Snackbar.LENGTH_LONG)
                 }
-
-            }
-            is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-            is AppState.Success -> {
-                binding.loadingLayout.visibility = View.GONE
-                weatherListAdapter.run { setData(data.weatherInfoList) }
+                is AppState.Loading -> {
+                    loadingLayout.visibility = View.VISIBLE
+                }
+                is AppState.Success -> {
+                    loadingLayout.visibility = View.GONE
+                    weatherListAdapter.run { setData(data.weatherInfoList) }
+                }
             }
         }
+    }
+
+    private fun View.setRetry(textMessage: String, textRetry: String, length: Int) {
+        Snackbar.make(
+            this,
+            textMessage,
+            Snackbar.LENGTH_LONG
+        ).setAction(
+            textRetry
+        ) {
+            renderLocality()
+        }.show()
     }
 
     override fun onDestroy() {
@@ -121,12 +126,24 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     }
 
     override fun onItemListClick(weather: WeatherInfo) {
-        val bundle = Bundle()
-        bundle.putParcelable(KEY_BUNDLE_WEATHER, weather)
-        requireActivity().supportFragmentManager.beginTransaction()
-            .add(R.id.main_container, DetailsWeatherFragment.newInstance(bundle))
-            .addToBackStack("").commit()
+        activity?.run {
+            supportFragmentManager.beginTransaction()
+                .add(
+                    R.id.main_container,
+                    DetailsWeatherFragment.newInstance(
+                        Bundle().apply {
+                            putParcelable(KEY_BUNDLE_WEATHER, weather)
+                        })
+                )
+                .addToBackStack("")
+                .commit()
+        }
     }
 }
+
+private fun Snackbar.setAction() {
+    TODO("Not yet implemented")
+}
+
 
 
