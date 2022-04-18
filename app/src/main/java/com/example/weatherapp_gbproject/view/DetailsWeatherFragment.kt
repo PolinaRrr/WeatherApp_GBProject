@@ -1,15 +1,19 @@
 package com.example.weatherapp_gbproject.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.example.weatherapp_gbproject.repository.WeatherInfo
-import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_WEATHER
 import com.example.weatherapp_gbproject.databinding.FragmentDetailsWeatherBinding
+import com.example.weatherapp_gbproject.repository.*
+import com.example.weatherapp_gbproject.viewmodel.ResponseState
+import com.google.android.material.snackbar.Snackbar
 
-class DetailsWeatherFragment : Fragment() {
+
+class DetailsWeatherFragment : Fragment(), OnServerResponse, OnErrorListener {
 
     private var _binding: FragmentDetailsWeatherBinding? = null
     private val binding get() = _binding!!
@@ -24,22 +28,43 @@ class DetailsWeatherFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        arguments?.let { requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER) }
-            ?.run { renderWeatherData(this) }
+    private lateinit var currentLocality: String
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun startWeatherLoader(lat: Double, lon: Double){
+        Thread {
+            WeatherLoader(this@DetailsWeatherFragment,this@DetailsWeatherFragment).loaderWeather(lat,lon)
+        }.start()
     }
 
-    private fun renderWeatherData(weather: WeatherInfo) {
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let { requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER) }
+            ?.run {
+                currentLocality = this.city.locality
+                startWeatherLoader(this.city.lat,this.city.lon)
+//                Thread {
+//                    WeatherLoader(this@DetailsWeatherFragment,this@DetailsWeatherFragment).loaderWeather(
+//                        this.city.lat,
+//                        this.city.lon
+//                    )
+//                }.start()
+            }
+    }
+
+    private fun renderWeatherData(weather: WeatherDTO) {
         with(binding) {
             binding.loadingLayout.visibility = View.GONE
-            binding.textViewLocality.text = weather.city.locality
-            binding.textViewCondition.text = weather.condition
-            binding.textViewTemperature.text = weather.temp.toString()
-            binding.textViewTemperatureFeelLike.text = weather.feels_like.toString()
-            binding.textViewWindSpeed.text = weather.wind_speed.toString()
-            binding.textViewWindDir.text = weather.wind_dir
-            binding.textViewPressureMm.text = weather.pressure_mm.toString()
+            binding.textViewLocality.text = currentLocality
+            binding.textViewCondition.text = weather.fact.condition
+            binding.textViewTemperature.text = weather.fact.temp.toString()
+            binding.textViewTemperatureFeelLike.text = weather.fact.feelsLike.toString()
+            binding.textViewWindSpeed.text = weather.fact.windSpeed.toString()
+            binding.textViewWindDir.text = weather.fact.windDir
+            binding.textViewPressureMm.text = weather.fact.pressureMm.toString()
         }
     }
 
@@ -52,7 +77,25 @@ class DetailsWeatherFragment : Fragment() {
         @JvmStatic
         fun newInstance(bundle: Bundle) = DetailsWeatherFragment()
             .apply { arguments = bundle }
+    }
 
+    override fun onResponce(weatherDTO: WeatherDTO) {
+        renderWeatherData(weatherDTO)
+    }
+
+    //Если я хочу сделать у Snackbar возможность повторной попытки отправки запроса и по идее нужно повторно вызвать startWeatherLoader()?
+
+    override fun onError(error: ResponseState) {
+        with(binding){
+            when(error){
+                is ResponseState.ErrorConnectionFromClient -> {
+                    Snackbar.make(root,"Error",Snackbar.LENGTH_LONG).show()
+                }
+                is ResponseState.ErrorConnectionFromServer ->{
+                    Snackbar.make(root,"Error",Snackbar.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 }
 

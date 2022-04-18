@@ -10,5 +10,7 @@
     <string name="textView_wind_dir">direction</string>
     <string name="textView_pressure">Atmospheric pressure</string>
     <string name="textView_pressure_mm">mmHG</string>
+    <string name="editText_url">https://yandex.ru/pogoda/</string>
+    <string name="button_ok">ok</string>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.example.weatherapp_gbproject.repository
 
-class RepositoryImpl : Repository {
-    override fun getWeatherFromFromServer() = WeatherInfo()
+class LocalRepositoryImpl : LocalRepository {
 
     override fun getWorldWeatherLocalStorage() = getWorldCities()
 
