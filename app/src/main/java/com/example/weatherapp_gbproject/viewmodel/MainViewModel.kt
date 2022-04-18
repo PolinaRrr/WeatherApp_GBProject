@@ -1,17 +1,16 @@
 package com.example.weatherapp_gbproject.viewmodel
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.weatherapp_gbproject.repository.RepositoryImpl
+import androidx.lifecycle.ViewModel
+import com.example.weatherapp_gbproject.repository.LocalRepositoryImpl
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val liveDate: MutableLiveData<AppState> = MutableLiveData(),
-    private val repository: RepositoryImpl = RepositoryImpl()
+    private val repository: LocalRepositoryImpl = LocalRepositoryImpl()
 ) : ViewModel() {
 
     //кастомная функция возвращает лайвдейту

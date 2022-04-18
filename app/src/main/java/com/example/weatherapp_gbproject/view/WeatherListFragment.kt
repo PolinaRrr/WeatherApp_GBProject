@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp_gbproject.R
-import com.example.weatherapp_gbproject.viewmodel.MainViewModel
 import com.example.weatherapp_gbproject.databinding.FragmentWeatherListBinding
-import com.example.weatherapp_gbproject.viewmodel.AppState
-import com.google.android.material.snackbar.Snackbar
-import com.example.weatherapp_gbproject.repository.WeatherInfo
 import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_WEATHER
+import com.example.weatherapp_gbproject.repository.WeatherInfo
+import com.example.weatherapp_gbproject.viewmodel.AppState
+import com.example.weatherapp_gbproject.viewmodel.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class WeatherListFragment : Fragment(), OnItemListClickListener {
 
@@ -141,9 +141,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     }
 }
 
-private fun Snackbar.setAction() {
-    TODO("Not yet implemented")
-}
 
 
 
