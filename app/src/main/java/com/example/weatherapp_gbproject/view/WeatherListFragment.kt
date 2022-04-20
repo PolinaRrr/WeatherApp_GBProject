@@ -21,7 +21,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     private var _binding: FragmentWeatherListBinding? = null
     private val binding get() = _binding!!
 
-
     private val weatherListAdapter: WeatherListAdapter by lazy {
         WeatherListAdapter(this)
     }
@@ -49,7 +48,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             Observer<AppState> { data -> renderData(data) }
         //подписка на лайвдейту мейнфрагментом, чтобы пока жив фрагмент, ловить изменения
         viewModel.getData().observe(viewLifecycleOwner, observer)
-
 
         viewModel.getRussianWeather()
     }
