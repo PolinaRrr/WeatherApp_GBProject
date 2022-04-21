@@ -21,7 +21,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     private var _binding: FragmentWeatherListBinding? = null
     private val binding get() = _binding!!
 
-
     private val weatherListAdapter: WeatherListAdapter by lazy {
         WeatherListAdapter(this)
     }
@@ -50,7 +49,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         //подписка на лайвдейту мейнфрагментом, чтобы пока жив фрагмент, ловить изменения
         viewModel.getData().observe(viewLifecycleOwner, observer)
 
-
         viewModel.getRussianWeather()
     }
 
@@ -73,7 +71,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
                     R.drawable.icon_russia_flag
                 )
             )
-
         } else {
             viewModel.getWorldWeather()
             binding.floatingActionButton.setImageDrawable(
@@ -90,7 +87,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             when (data) {
                 is AppState.Error -> {
                     loadingLayout.visibility = View.GONE
-                    root.setRetry("FATAL ERROR  ${data.error}", "RETRY", Snackbar.LENGTH_LONG)
+                    root.setRetry("FATAL ERROR", "RETRY", Snackbar.LENGTH_LONG)
                 }
                 is AppState.Loading -> {
                     loadingLayout.visibility = View.VISIBLE
