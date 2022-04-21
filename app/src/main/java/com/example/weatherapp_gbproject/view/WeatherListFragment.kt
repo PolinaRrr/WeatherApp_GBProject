@@ -71,7 +71,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
                     R.drawable.icon_russia_flag
                 )
             )
-
         } else {
             viewModel.getWorldWeather()
             binding.floatingActionButton.setImageDrawable(
@@ -88,7 +87,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             when (data) {
                 is AppState.Error -> {
                     loadingLayout.visibility = View.GONE
-                    root.setRetry("FATAL ERROR  ${data.error}", "RETRY", Snackbar.LENGTH_LONG)
+                    root.setRetry("FATAL ERROR", "RETRY", Snackbar.LENGTH_LONG)
                 }
                 is AppState.Loading -> {
                     loadingLayout.visibility = View.VISIBLE

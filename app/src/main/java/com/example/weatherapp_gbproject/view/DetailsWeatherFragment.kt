@@ -16,8 +16,7 @@ import com.example.weatherapp_gbproject.viewmodel.ResponseState
 import com.google.android.material.snackbar.Snackbar
 
 
-
-class DetailsWeatherFragment : Fragment(), OnServerResponse, OnErrorListener {
+class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
 
     private var _binding: FragmentDetailsWeatherBinding? = null
     private val binding get() = _binding!!
@@ -33,7 +32,6 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnErrorListener {
     }
 
     private lateinit var currentLocality: String
-
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun startWeatherLoader(lat: Double, lon: Double) {
@@ -59,9 +57,7 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnErrorListener {
         arguments?.let { requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER) }
             ?.run {
                 currentLocality = this.city.locality
-
-                startWeatherLoader(this.city.lat,this.city.lon)
-//
+                startWeatherLoader(this.city.lat, this.city.lon)
             }
     }
 
@@ -93,12 +89,10 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnErrorListener {
         renderWeatherData(weatherDTO)
     }
 
-    //Если я хочу сделать у Snackbar возможность повторной попытки отправки запроса и по идее нужно повторно вызвать startWeatherLoader()?
-
     @RequiresApi(Build.VERSION_CODES.N)
-    override fun presentResponse(error: ResponseState) {
+    override fun presentResponse(state: ResponseState) {
         with(binding) {
-            when (error) {
+            when (state) {
                 is ResponseState.ErrorConnectionFromClient -> {
                     Snackbar.make(root, "Error Client", Snackbar.LENGTH_LONG).setAction("RETRY") {
                         startWeatherLoader(
@@ -115,14 +109,14 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnErrorListener {
                         )
                     }.show()
                 }
-                is ResponseState.Success -> {
-                   // Snackbar.make(root, "Success", Snackbar.LENGTH_LONG).show()
-                    Snackbar.make(root, "Error Client", Snackbar.LENGTH_LONG).setAction("RETRY") {
-                        startWeatherLoader(
-                            DetailsViewModel().getLatCurrentLocality(currentLocality),
-                            DetailsViewModel().getLonCurrentLocality(currentLocality)
-                        )
+                is ResponseState.ErrorJson ->{
+                    Snackbar.make(root,"Connection limit exceeded",Snackbar.LENGTH_LONG).setAction("BACK") {
+                        activity?.supportFragmentManager?.popBackStack()
                     }.show()
+                }
+                is ResponseState.Success -> {
+                    Snackbar.make(root, "Success", Snackbar.LENGTH_LONG).show()
+
                 }
             }
         }

@@ -13,10 +13,8 @@ class DetailsViewModel(
 
     fun getDataFromServer() = liveDate
 
-
     fun getLatCurrentLocality(currentLocality: String) : Double {
         var lat: Double = 0.0
-
         for (i in 0 until getWorldCities().size) {
             if (getWorldCities()[i].city.locality == currentLocality) {
                 lat = getWorldCities()[i].city.lat
@@ -33,6 +31,7 @@ class DetailsViewModel(
 
         return lat
     }
+
     fun getLonCurrentLocality(currentLocality: String) : Double {
         var lon: Double = 0.0
         for (i in 0 until getWorldCities().size) {
