@@ -1,5 +1,9 @@
 package com.example.weatherapp_gbproject.view
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.weatherapp_gbproject.databinding.FragmentDetailsWeatherBinding
 import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
@@ -35,12 +40,14 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun startWeatherLoader(lat: Double, lon: Double) {
-        Thread {
-            WeatherLoader(this@DetailsWeatherFragment, this@DetailsWeatherFragment).loaderWeather(
-                lat,
-                lon
-            )
-        }.start()
+        requireActivity().startService(
+            Intent(
+                requireContext(),
+                ConnectionService::class.java
+            ).apply {
+                putExtra(KEY_CONNECTION_SERVICE_LAT, lat)
+                putExtra(KEY_CONNECTION_SERVICE_LON, lon)
+            })
     }
 
     private val viewModel: DetailsViewModel by lazy {
@@ -53,7 +60,8 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
         val observer =
             Observer<ResponseState> { error -> presentResponse(error) }
         viewModel.getDataFromServer().observe(viewLifecycleOwner, observer)
-
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver,
+                IntentFilter(KEY_NOTIFICATION_BROADCAST_RECEIVER_WAVE))
         arguments?.let { requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER) }
             ?.run {
                 currentLocality = this.city.locality
@@ -74,10 +82,22 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
         }
     }
 
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.let { intent ->
+                intent.getParcelableExtra<WeatherDTO>(KEY_BUNDLE_SERVICE_BROADCAST_WEATHER)?.let {
+                    onResponce(it)
+                }
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
     }
+
 
     companion object {
         @JvmStatic
@@ -109,10 +129,11 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
                         )
                     }.show()
                 }
-                is ResponseState.ErrorJson ->{
-                    Snackbar.make(root,"Connection limit exceeded",Snackbar.LENGTH_LONG).setAction("BACK") {
-                        activity?.supportFragmentManager?.popBackStack()
-                    }.show()
+                is ResponseState.ErrorJson -> {
+                    Snackbar.make(root, "Connection limit exceeded", Snackbar.LENGTH_LONG)
+                        .setAction("BACK") {
+                            activity?.supportFragmentManager?.popBackStack()
+                        }.show()
                 }
                 is ResponseState.Success -> {
                     Snackbar.make(root, "Success", Snackbar.LENGTH_LONG).show()
