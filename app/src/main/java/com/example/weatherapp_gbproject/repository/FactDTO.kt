@@ -1,8 +1,11 @@
 package com.example.weatherapp_gbproject.repository
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class FactDTO(
     @SerializedName("condition")
     val condition: String,
@@ -16,4 +19,4 @@ data class FactDTO(
     val windDir: String,
     @SerializedName("wind_speed")
     val windSpeed: Double
-)
+): Parcelable

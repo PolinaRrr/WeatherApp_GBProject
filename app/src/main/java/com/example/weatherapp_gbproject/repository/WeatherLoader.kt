@@ -36,11 +36,11 @@ class WeatherLoader(
         Thread {
             lateinit var urlConnection: HttpURLConnection
             try {
-                val urlText = "https://api.weather.yandex.ru/v2/informers?lat=$lat&lon=$lon"
+                val urlText = "$YANDEX_DOMAIN${YANDEX_TARIFF_VERSION}lat=$lat&lon=$lon"
                 val uri = URL(urlText)
                 urlConnection = uri.openConnection() as HttpsURLConnection
                 urlConnection.addRequestProperty(
-                    "X-Yandex-API-Key",
+                    KEY_WEATHER_LOADER_YANDEX_QUERY,
                     WEATHER_API_KEY
                 )
                 Log.d("@@@", "${urlConnection.responseCode} ${urlConnection.responseMessage}")
@@ -85,7 +85,7 @@ class WeatherLoader(
         Thread {
             lateinit var urlConnection: HttpURLConnection
             try {
-                val urlText = "http://212.86.114.27/v2/informers?lat=$lat&lon=$lon"
+                val urlText = "$EXPERIMENTAL_DOMAIN${YANDEX_TARIFF_VERSION}lat=$lat&lon=$lon"
                 val uri = URL(urlText)
                 urlConnection = uri.openConnection() as HttpURLConnection
                 urlConnection.addRequestProperty(
