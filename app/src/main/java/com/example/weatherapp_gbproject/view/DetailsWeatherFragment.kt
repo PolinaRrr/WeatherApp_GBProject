@@ -14,12 +14,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.weatherapp_gbproject.BuildConfig
 import com.example.weatherapp_gbproject.databinding.FragmentDetailsWeatherBinding
 import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
 import com.example.weatherapp_gbproject.viewmodel.ResponseState
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import okhttp3.*
+import java.io.IOException
 
 
 class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
@@ -41,14 +45,40 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun startWeatherLoader(lat: Double, lon: Double) {
-        requireActivity().startService(
-            Intent(
-                requireContext(),
-                ConnectionService::class.java
-            ).apply {
-                putExtra(KEY_CONNECTION_SERVICE_LAT, lat)
-                putExtra(KEY_CONNECTION_SERVICE_LON, lon)
-            })
+//        requireActivity().startService(
+//            Intent(
+//                requireContext(),
+//                ConnectionService::class.java
+//            ).apply {
+//                putExtra(KEY_CONNECTION_SERVICE_LAT, lat)
+//                putExtra(KEY_CONNECTION_SERVICE_LON, lon)
+//            })
+        binding.loadingLayout.visibility = View.VISIBLE
+
+        val client = OkHttpClient()
+        val builderRequest = Request.Builder()
+        builderRequest.addHeader(KEY_WEATHER_LOADER_YANDEX_QUERY, BuildConfig.WEATHER_API_KEY)
+        builderRequest.url("$YANDEX_DOMAIN${YANDEX_TARIFF_VERSION}lat=$lat&lon=$lon")
+        val request = builderRequest.build()
+        val callback:Callback = object : Callback{
+            override fun onFailure(call: Call, e: IOException) {
+                //TODO HW
+            binding.loadingLayout.visibility = View.GONE
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful){
+                    val weatherDTO: WeatherDTO = Gson().fromJson(response.body?.string(), WeatherDTO::class.java)
+                    requireActivity().runOnUiThread{
+                        renderWeatherData(weatherDTO)
+                    }
+                }else{
+                    TODO("400 / 500 errors")
+                }
+            }
+        }
+        val call = client.newCall(request)
+        call.enqueue(callback)
     }
 
     private val viewModel: DetailsViewModel by lazy {
@@ -61,8 +91,10 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
         val observer =
             Observer<ResponseState> { error -> presentResponse(error) }
         viewModel.getDataFromServer().observe(viewLifecycleOwner, observer)
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(receiver,
-                IntentFilter(KEY_NOTIFICATION_BROADCAST_RECEIVER_WAVE))
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
+            receiver,
+            IntentFilter(KEY_NOTIFICATION_BROADCAST_RECEIVER_WAVE)
+        )
         arguments?.let { requireArguments().getParcelable<WeatherInfo>(KEY_BUNDLE_WEATHER) }
             ?.run {
                 currentLocality = this.city.locality
