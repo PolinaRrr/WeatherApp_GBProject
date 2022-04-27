@@ -30,12 +30,14 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
 <!--        </activity>-->
+        <service android:name=".view.AirplaneModeService"/>
         <service android:name=".view.ConnectionService"/>
+
         <receiver android:name=".repository.ConnectionBroadcastReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>
-<!--                <action android:name="android.intent.action.AIRPLANE_MODE_CHANGED"/>-->
+                <action android:name="android.intent.action.AIRPLANE_MODE"/>
                 <action android:name="connection"/>
 
             </intent-filter>

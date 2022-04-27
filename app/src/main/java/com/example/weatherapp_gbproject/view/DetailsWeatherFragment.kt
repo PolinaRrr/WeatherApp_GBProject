@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.weatherapp_gbproject.databinding.FragmentDetailsWeatherBinding
 import com.example.weatherapp_gbproject.repository.*
+import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
 import com.example.weatherapp_gbproject.viewmodel.ResponseState
 import com.google.android.material.snackbar.Snackbar

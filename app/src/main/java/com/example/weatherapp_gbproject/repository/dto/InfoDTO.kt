@@ -1,4 +1,4 @@
-package com.example.weatherapp_gbproject.repository
+package com.example.weatherapp_gbproject.repository.dto
 
 
 import android.os.Parcelable
