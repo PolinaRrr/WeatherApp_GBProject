@@ -6,6 +6,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.weatherapp_gbproject.BuildConfig.WEATHER_API_KEY
+import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
 import com.example.weatherapp_gbproject.viewmodel.ResponseState
 import com.google.gson.Gson
 import com.google.gson.JsonIOException

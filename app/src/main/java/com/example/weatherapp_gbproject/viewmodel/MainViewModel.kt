@@ -19,11 +19,10 @@ class MainViewModel(
     fun getWorldWeather() = getWeather(false)
     fun getRussianWeather() = getWeather(true)
 
+
     @OptIn(DelicateCoroutinesApi::class)
     private fun getWeather(isRussianCity: Boolean) {
         GlobalScope.launch {
-            liveDate.postValue(AppState.Error(ExceptionInInitializerError()))
-
             if (isRussianCity) {
                 liveDate.postValue(AppState.Success(repository.getRussianWeatherLocalStorage()))
             } else {

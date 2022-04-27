@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.weatherapp_gbproject.BuildConfig
 import com.example.weatherapp_gbproject.repository.*
+import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
 import com.example.weatherapp_gbproject.viewmodel.ResponseState
 import com.google.gson.Gson
 import com.google.gson.JsonIOException
@@ -36,8 +37,6 @@ class ConnectionService(private val notification: String = "") : IntentService(n
         intent?.let {
             val lat = it.getDoubleExtra(KEY_CONNECTION_SERVICE_LAT, 0.0)
             val lon = it.getDoubleExtra(KEY_CONNECTION_SERVICE_LON, 0.0)
-
-            //написать функцию аналог коннект сервер
 
             if ((0..10).random() < 5) {
                 connectServer(true, lat, lon)
