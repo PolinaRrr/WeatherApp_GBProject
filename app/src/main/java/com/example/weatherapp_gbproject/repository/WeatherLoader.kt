@@ -42,7 +42,6 @@ class WeatherLoader(
         connectServer("$EXPERIMENTAL_DOMAIN${YANDEX_TARIFF_VERSION}lat=$lat&lon=$lon", true)
 
     }
-    
 
     private fun connectServer(url: String, isHTTP: Boolean) {
         var responseCode = 200
@@ -93,7 +92,6 @@ class WeatherLoader(
                         )
                     )
                 }
-
             } finally {
                 urlConnection.disconnect()
             }

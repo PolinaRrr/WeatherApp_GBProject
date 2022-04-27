@@ -22,14 +22,12 @@ class MainViewModel(
     @OptIn(DelicateCoroutinesApi::class)
     private fun getWeather(isRussianCity: Boolean) {
         GlobalScope.launch {
-            if ((0..10).random() < 5) {
-                liveDate.postValue(AppState.Error(ExceptionInInitializerError()))
+            liveDate.postValue(AppState.Error(ExceptionInInitializerError()))
+
+            if (isRussianCity) {
+                liveDate.postValue(AppState.Success(repository.getRussianWeatherLocalStorage()))
             } else {
-                if (isRussianCity) {
-                    liveDate.postValue(AppState.Success(repository.getRussianWeatherLocalStorage()))
-                } else {
-                    liveDate.postValue(AppState.Success(repository.getWorldWeatherLocalStorage()))
-                }
+                liveDate.postValue(AppState.Success(repository.getWorldWeatherLocalStorage()))
             }
         }
     }
