@@ -68,12 +68,14 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
     private fun renderWeatherData(detailsWeatherState: DetailsWeatherState) {
         when (detailsWeatherState) {
             is DetailsWeatherState.Error -> TODO()
-            DetailsWeatherState.Loading -> TODO()
+            DetailsWeatherState.Loading -> {
+
+            }
             is DetailsWeatherState.Success -> {
                 val weather = detailsWeatherState.weather
                 with(binding) {
                     binding.loadingLayout.visibility = View.GONE
-                    binding.textViewLocality.text = weather.city.locality
+                    binding.textViewLocality.text = currentLocality.locality
                     binding.textViewCondition.text = weather.condition
                     binding.textViewTemperature.text = weather.temp.toString()
                     binding.textViewTemperatureFeelLike.text = weather.feels_like.toString()

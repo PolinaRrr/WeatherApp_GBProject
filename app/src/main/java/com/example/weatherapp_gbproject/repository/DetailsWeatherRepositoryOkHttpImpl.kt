@@ -12,14 +12,14 @@ import okhttp3.Response
 
 
 class DetailsWeatherRepositoryOkHttpImpl : DetailsWeatherRepository {
-    override fun getWeatherDetails(city: City, callback: Callback){
+    override fun getWeatherDetails(city: City, callback: Callback) {
         val client = OkHttpClient()
         val builderRequest = Request.Builder()
         builderRequest.addHeader(KEY_WEATHER_LOADER_YANDEX_QUERY, BuildConfig.WEATHER_API_KEY)
         builderRequest.url("$YANDEX_DOMAIN${YANDEX_TARIFF_VERSION}lat=${city.lat}&lon=${city.lon}")
         val request = builderRequest.build()
         val call = client.newCall(request)
-        Thread{
+        Thread {
             val response: Response = call.execute()
             if (response.isSuccessful) {
                 val weatherDTO: WeatherDTO =

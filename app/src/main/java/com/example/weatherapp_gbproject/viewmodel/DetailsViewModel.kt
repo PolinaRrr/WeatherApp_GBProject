@@ -6,14 +6,16 @@ import androidx.lifecycle.ViewModel
 import com.example.weatherapp_gbproject.repository.*
 
 
+
 class DetailsViewModel(
     private val liveDate: MutableLiveData<DetailsWeatherState> = MutableLiveData(),
-    private val repository: DetailsWeatherRepository = DetailsWeatherRepositoryOkHttpImpl()
+    private val repository: DetailsWeatherRepository = DetailsWeatherRepositoryRetrofitImpl()
 ) : ViewModel() {
 
     fun getLivedata() = liveDate
 
     fun getWeather(city: City) {
+        liveDate.postValue(DetailsWeatherState.Loading)
         repository.getWeatherDetails(
             city
         ) { weatherInfo -> liveDate.postValue(
