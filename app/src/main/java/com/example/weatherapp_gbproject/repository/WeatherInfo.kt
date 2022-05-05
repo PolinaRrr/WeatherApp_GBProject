@@ -5,11 +5,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class WeatherInfo(
-    val city: City = getDefaultCity(),
+    var city: City = getDefaultCity(),
     val temp: Int = 0,
     val feels_like: Int = 0,
     val condition: String = "Cloudy",
-    val wind_speed: Int = 2,
+    val wind_speed: Double = 2.0,
     val wind_dir: String = "northwest",
     val pressure_mm: Int = 759
 ) : Parcelable
@@ -29,7 +29,7 @@ fun getWorldCities(): List<WeatherInfo> {
             1,
             2,
             "Rain",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -38,7 +38,7 @@ fun getWorldCities(): List<WeatherInfo> {
             3,
             4,
             "Overcast",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -47,7 +47,7 @@ fun getWorldCities(): List<WeatherInfo> {
             5,
             6,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -56,7 +56,7 @@ fun getWorldCities(): List<WeatherInfo> {
             7,
             8,
             "Showers",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -65,7 +65,7 @@ fun getWorldCities(): List<WeatherInfo> {
             9,
             10,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -74,7 +74,7 @@ fun getWorldCities(): List<WeatherInfo> {
             11,
             12,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -83,7 +83,7 @@ fun getWorldCities(): List<WeatherInfo> {
             13,
             14,
             "Clear",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -92,7 +92,7 @@ fun getWorldCities(): List<WeatherInfo> {
             15,
             16,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -101,7 +101,7 @@ fun getWorldCities(): List<WeatherInfo> {
             17,
             18,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -110,7 +110,7 @@ fun getWorldCities(): List<WeatherInfo> {
             19,
             20,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         )
@@ -124,7 +124,7 @@ fun getRussianCities(): List<WeatherInfo> {
             1,
             2,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -133,7 +133,7 @@ fun getRussianCities(): List<WeatherInfo> {
             5,
             6,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -142,7 +142,7 @@ fun getRussianCities(): List<WeatherInfo> {
             7,
             8,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -151,7 +151,7 @@ fun getRussianCities(): List<WeatherInfo> {
             9,
             10,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -160,7 +160,7 @@ fun getRussianCities(): List<WeatherInfo> {
             11,
             12,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -169,7 +169,7 @@ fun getRussianCities(): List<WeatherInfo> {
             13,
             14,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -178,7 +178,7 @@ fun getRussianCities(): List<WeatherInfo> {
             15,
             16,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -187,7 +187,7 @@ fun getRussianCities(): List<WeatherInfo> {
             17,
             18,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         ),
@@ -196,7 +196,7 @@ fun getRussianCities(): List<WeatherInfo> {
             19,
             20,
             "Cloudy",
-            3,
+            3.0,
             "north",
             761
         )

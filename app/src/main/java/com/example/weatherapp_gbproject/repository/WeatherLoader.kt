@@ -70,7 +70,7 @@ class WeatherLoader(
                     val weatherDTO: WeatherDTO = Gson().fromJson(response, WeatherDTO::class.java)
 
                     Handler(Looper.getMainLooper()).post {
-                        onServerResponseListener.onResponce(weatherDTO)
+                        onServerResponseListener.onResponse(weatherDTO)
                     }
                 } catch (e: JsonIOException) {
                     Log.d("%%% ", response)
