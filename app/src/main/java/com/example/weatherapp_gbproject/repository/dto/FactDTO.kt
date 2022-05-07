@@ -9,6 +9,8 @@ import kotlinx.android.parcel.Parcelize
 data class FactDTO(
     @SerializedName("condition")
     val condition: String,
+    @SerializedName("icon")
+    val icon: String,
     @SerializedName("temp")
     val temp: Int,
     @SerializedName("feels_like")

@@ -13,6 +13,7 @@ class DataConverter {
             factWeather.temp,
             factWeather.feelsLike,
             factWeather.condition,
+            factWeather.icon,
             factWeather.windSpeed,
             factWeather.windDir,
             factWeather.pressureMm)
