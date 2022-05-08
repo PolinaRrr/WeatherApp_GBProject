@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.example.weatherapp_gbproject.repository.*
 
 
-
 class DetailsViewModel(
     private val liveDate: MutableLiveData<DetailsWeatherState> = MutableLiveData(),
     private val repository: DetailsWeatherRepository = DetailsWeatherRepositoryRetrofitImpl()
@@ -17,14 +16,20 @@ class DetailsViewModel(
     fun getWeather(city: City) {
         liveDate.postValue(DetailsWeatherState.Loading)
         repository.getWeatherDetails(
-            city
-        ) { weatherInfo -> liveDate.postValue(
-            DetailsWeatherState.Success(weatherInfo)) }
+            city,
+            {weatherInfo -> liveDate.postValue(
+                DetailsWeatherState.Success(weatherInfo))},
+            {responseState -> liveDate.postValue(
+                DetailsWeatherState.Error(responseState))}
+        )
     }
 
     fun interface Callback {
         fun onResponse(weatherInfo: WeatherInfo)
-        //TODO onFail()
+    }
+
+    fun interface ErrorCallback {
+        fun onError(responseState: ResponseState)
     }
 
     fun getLatCurrentLocality(currentLocality: String): Double {
@@ -63,5 +68,6 @@ class DetailsViewModel(
         return lon
     }
 }
+
 
 

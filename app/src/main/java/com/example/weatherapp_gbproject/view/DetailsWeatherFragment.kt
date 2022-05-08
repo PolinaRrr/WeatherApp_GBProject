@@ -69,9 +69,12 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun renderWeatherData(detailsWeatherState: DetailsWeatherState) {
         when (detailsWeatherState) {
-            is DetailsWeatherState.Error -> TODO()
+            is DetailsWeatherState.Error -> {
+                presentResponse(detailsWeatherState.state)
+            }
             DetailsWeatherState.Loading -> {
 
             }

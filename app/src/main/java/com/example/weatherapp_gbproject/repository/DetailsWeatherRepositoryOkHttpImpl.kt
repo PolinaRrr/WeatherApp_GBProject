@@ -4,6 +4,7 @@ package com.example.weatherapp_gbproject.repository
 import com.example.weatherapp_gbproject.BuildConfig
 import com.example.weatherapp_gbproject.DataConverter
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
+import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel.Callback
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -12,7 +13,7 @@ import okhttp3.Response
 
 
 class DetailsWeatherRepositoryOkHttpImpl : DetailsWeatherRepository {
-    override fun getWeatherDetails(city: City, callback: Callback) {
+    override fun getWeatherDetails(city: City, callback: Callback, errorCallback: DetailsViewModel.ErrorCallback) {
         val client = OkHttpClient()
         val builderRequest = Request.Builder()
         builderRequest.addHeader(KEY_WEATHER_LOADER_YANDEX_QUERY, BuildConfig.WEATHER_API_KEY)
