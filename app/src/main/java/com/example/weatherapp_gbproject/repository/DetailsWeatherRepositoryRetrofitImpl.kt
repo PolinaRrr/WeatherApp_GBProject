@@ -17,7 +17,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class DetailsWeatherRepositoryRetrofitImpl(private val onStateListener: OnStateListener) : DetailsWeatherRepository {
+class DetailsWeatherRepositoryRetrofitImpl() : DetailsWeatherRepository {
 
     override fun getWeatherDetails(city: City, callback: DetailsViewModel.Callback) {
 
@@ -45,7 +45,7 @@ class DetailsWeatherRepositoryRetrofitImpl(private val onStateListener: OnStateL
                     }
                     override fun onFailure(call: Call<WeatherDTO>, t: Throwable) {
                         if (responseCode in 400..499) {
-                            onStateListener.presentResponse(ResponseState.ErrorConnectionFromClient(t))
+                            ResponseState.ErrorConnectionFromClient(t)
                             Log.d("@@@","ResponseCode $responseCode")
                         }
                         if (responseCode in 500..599){
