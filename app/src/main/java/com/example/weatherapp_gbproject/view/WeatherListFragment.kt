@@ -12,8 +12,8 @@ import com.example.weatherapp_gbproject.R
 import com.example.weatherapp_gbproject.databinding.FragmentWeatherListBinding
 import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_WEATHER
 import com.example.weatherapp_gbproject.repository.WeatherInfo
-import com.example.weatherapp_gbproject.viewmodel.AppState
 import com.example.weatherapp_gbproject.viewmodel.MainViewModel
+import com.example.weatherapp_gbproject.viewmodel.state.AppState
 import com.google.android.material.snackbar.Snackbar
 
 class WeatherListFragment : Fragment(), OnItemListClickListener {

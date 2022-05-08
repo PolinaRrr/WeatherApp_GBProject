@@ -2,18 +2,16 @@ package com.example.weatherapp_gbproject.view
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.weatherapp_gbproject.databinding.ActivityWebviewMainBinding
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.net.URL
 import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
-import java.net.URL
-import com.example.weatherapp_gbproject.databinding.ActivityWebviewMainBinding
 
-
+//TODO выпилить на ненадобностью
 class MainWebviewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWebviewMainBinding

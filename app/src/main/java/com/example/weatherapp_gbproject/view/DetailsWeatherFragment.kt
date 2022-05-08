@@ -22,8 +22,8 @@ import com.example.weatherapp_gbproject.databinding.FragmentDetailsWeatherBindin
 import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
-import com.example.weatherapp_gbproject.viewmodel.DetailsWeatherState
-import com.example.weatherapp_gbproject.viewmodel.ResponseState
+import com.example.weatherapp_gbproject.viewmodel.state.DetailsWeatherState
+import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -132,7 +132,7 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
     }
 
     override fun onResponse(weatherDTO: WeatherDTO) {
-        //renderWeatherData(weatherDTO)
+        //TODO заменить, пока работает не троЖ
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -146,6 +146,11 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
                 }
                 is ResponseState.ErrorConnectionFromServer -> {
                     Snackbar.make(root, "Error Server", Snackbar.LENGTH_LONG).setAction("RETRY") {
+                        viewModel.getWeather(currentLocality)
+                    }.show()
+                }
+                is ResponseState.ErrorFatal -> {
+                    Snackbar.make(root, "Error Fatal", Snackbar.LENGTH_LONG).setAction("RETRY") {
                         viewModel.getWeather(currentLocality)
                     }.show()
                 }

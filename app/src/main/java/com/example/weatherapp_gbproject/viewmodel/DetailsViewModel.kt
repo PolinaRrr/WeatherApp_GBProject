@@ -4,6 +4,9 @@ package com.example.weatherapp_gbproject.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weatherapp_gbproject.repository.*
+import com.example.weatherapp_gbproject.repository.connection.DetailsWeatherRepositoryRetrofitImpl
+import com.example.weatherapp_gbproject.viewmodel.state.DetailsWeatherState
+import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
 
 
 class DetailsViewModel(
@@ -17,10 +20,16 @@ class DetailsViewModel(
         liveDate.postValue(DetailsWeatherState.Loading)
         repository.getWeatherDetails(
             city,
-            {weatherInfo -> liveDate.postValue(
-                DetailsWeatherState.Success(weatherInfo))},
-            {responseState -> liveDate.postValue(
-                DetailsWeatherState.Error(responseState))}
+            { weatherInfo ->
+                liveDate.postValue(
+                    DetailsWeatherState.Success(weatherInfo)
+                )
+            },
+            { responseState ->
+                liveDate.postValue(
+                    DetailsWeatherState.Error(responseState)
+                )
+            }
         )
     }
 

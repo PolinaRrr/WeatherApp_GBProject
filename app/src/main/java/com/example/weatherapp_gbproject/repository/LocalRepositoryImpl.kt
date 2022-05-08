@@ -6,7 +6,7 @@ class LocalRepositoryImpl : LocalRepository {
 
     override fun getRussianWeatherLocalStorage() = getRussianCities()
 
-    override fun getWeatherFromFromServer() : WeatherInfo{
+    override fun getWeatherFromFromServer(): WeatherInfo {
         return WeatherInfo()
     }
 

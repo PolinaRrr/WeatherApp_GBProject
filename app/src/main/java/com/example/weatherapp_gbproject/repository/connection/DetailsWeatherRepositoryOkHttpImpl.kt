@@ -1,8 +1,10 @@
-package com.example.weatherapp_gbproject.repository
+package com.example.weatherapp_gbproject.repository.connection
 
 
+import android.util.Log
 import com.example.weatherapp_gbproject.BuildConfig
 import com.example.weatherapp_gbproject.DataConverter
+import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel.Callback
@@ -11,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 
-
+//TODO выпилить за ненадобностью
 class DetailsWeatherRepositoryOkHttpImpl : DetailsWeatherRepository {
     override fun getWeatherDetails(city: City, callback: Callback, errorCallback: DetailsViewModel.ErrorCallback) {
         val client = OkHttpClient()
@@ -30,7 +32,7 @@ class DetailsWeatherRepositoryOkHttpImpl : DetailsWeatherRepository {
                 callback.onResponse(weather)
 
             } else {
-                TODO("400 / 500 errors")
+                Log.d("@@@","$city")
             }
         }.start()
 

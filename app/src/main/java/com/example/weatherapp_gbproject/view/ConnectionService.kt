@@ -9,7 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.weatherapp_gbproject.BuildConfig
 import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
-import com.example.weatherapp_gbproject.viewmodel.ResponseState
+import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
 import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException

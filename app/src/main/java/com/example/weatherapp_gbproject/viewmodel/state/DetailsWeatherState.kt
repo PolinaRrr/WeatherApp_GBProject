@@ -1,4 +1,4 @@
-package com.example.weatherapp_gbproject.viewmodel
+package com.example.weatherapp_gbproject.viewmodel.state
 
 import com.example.weatherapp_gbproject.repository.WeatherInfo
 

@@ -1,4 +1,4 @@
-package com.example.weatherapp_gbproject.repository
+package com.example.weatherapp_gbproject.repository.connection
 
 import android.os.Build
 import android.os.Handler
@@ -6,8 +6,9 @@ import android.os.Looper
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.weatherapp_gbproject.BuildConfig.WEATHER_API_KEY
+import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
-import com.example.weatherapp_gbproject.viewmodel.ResponseState
+import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
 import com.google.gson.Gson
 import com.google.gson.JsonIOException
 import com.google.gson.JsonSyntaxException
@@ -18,7 +19,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-
+//TODO выпилить за ненадобностью
 class WeatherLoader(
     private val onServerResponseListener: OnServerResponse,
     private val onStateListener: OnStateListener
