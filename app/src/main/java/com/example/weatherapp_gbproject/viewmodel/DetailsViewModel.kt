@@ -41,6 +41,7 @@ class DetailsViewModel(
         fun onError(responseState: ResponseState)
     }
 
+    //TODO выпилить
     fun getLatCurrentLocality(currentLocality: String): Double {
         var lat = 0.0
         for (i in 0 until getWorldCities().size) {
@@ -59,6 +60,7 @@ class DetailsViewModel(
         return lat
     }
 
+    //TODO выпилить
     fun getLonCurrentLocality(currentLocality: String): Double {
         var lon = 0.0
         for (i in 0 until getWorldCities().size) {

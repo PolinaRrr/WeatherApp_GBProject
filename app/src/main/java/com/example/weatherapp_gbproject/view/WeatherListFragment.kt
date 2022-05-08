@@ -53,11 +53,9 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     }
 
     private fun initRecyclerView() {
-        with(binding) {
-            binding.recyclerView.adapter = weatherListAdapter
-            binding.floatingActionButton.setOnClickListener {
-                renderLocality()
-            }
+        binding.recyclerView.adapter = weatherListAdapter
+        binding.floatingActionButton.setOnClickListener {
+            renderLocality()
         }
     }
 
@@ -87,7 +85,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             when (data) {
                 is AppState.Error -> {
                     loadingLayout.visibility = View.GONE
-                    root.setRetry("FATAL ERROR", "RETRY", Snackbar.LENGTH_LONG)
+                    root.setRetry("FATAL ERROR", "RETRY")
                 }
                 is AppState.Loading -> {
                     loadingLayout.visibility = View.VISIBLE
@@ -100,7 +98,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         }
     }
 
-    private fun View.setRetry(textMessage: String, textRetry: String, length: Int) {
+    private fun View.setRetry(textMessage: String, textRetry: String) {
         Snackbar.make(
             this,
             textMessage,
