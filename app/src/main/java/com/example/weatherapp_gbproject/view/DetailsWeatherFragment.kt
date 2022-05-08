@@ -152,7 +152,6 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
                             activity?.supportFragmentManager?.popBackStack()
                         }.show()
                 }
-
             }
         }
     }
