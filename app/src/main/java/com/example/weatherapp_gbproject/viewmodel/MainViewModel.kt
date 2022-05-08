@@ -4,6 +4,7 @@ package com.example.weatherapp_gbproject.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weatherapp_gbproject.repository.LocalRepositoryImpl
+import com.example.weatherapp_gbproject.viewmodel.state.AppState
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

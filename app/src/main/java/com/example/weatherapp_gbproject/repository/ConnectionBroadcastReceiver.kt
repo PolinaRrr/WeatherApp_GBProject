@@ -9,6 +9,6 @@ import android.util.Log
 class ConnectionBroadcastReceiver : BroadcastReceiver() {
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context?, intent: Intent?) {
-            Log.d("@@@", "AirPlane changed" )
+        Log.d("@@@", "AirPlane changed")
     }
 }
