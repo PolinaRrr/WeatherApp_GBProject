@@ -8,8 +8,8 @@ data class WeatherInfo(
     var city: City = getDefaultCity(),
     val temp: Int = 0,
     val feels_like: Int = 0,
-    val icon:String = "bkn_n",
     val condition: String = "Cloudy",
+    val icon: String = "bkn_n",
     val wind_speed: Double = 2.0,
     val wind_dir: String = "northwest",
     val pressure_mm: Int = 759

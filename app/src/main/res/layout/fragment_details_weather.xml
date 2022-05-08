@@ -14,11 +14,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <ImageView
+            android:id="@+id/image_icon"
+            android:visibility="visible"
+            android:layout_width="@dimen/_marginTop"
+            android:layout_height="@dimen/_marginTop"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="108dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView_temperature"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textView_locality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/textView_marginTop"
+            android:layout_marginTop="@dimen/_marginTop"
             android:text="@string/textView_locality"
             android:textSize="@dimen/textSize_textView_locality"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +54,7 @@
             android:id="@+id/textView_pressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/textView_marginTop"
+            android:layout_marginTop="@dimen/_marginTop"
             android:text="@string/textView_pressure"
             android:textSize="@dimen/textSize_textView_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -136,10 +149,10 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintVertical_bias="0.0"
             tools:visibility="visible">
 
             <ProgressBar
@@ -147,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
+
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

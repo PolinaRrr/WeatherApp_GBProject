@@ -9,11 +9,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import coil.ImageLoader
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import com.example.weatherapp_gbproject.databinding.FragmentDetailsWeatherBinding
 import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
@@ -74,18 +78,31 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
             is DetailsWeatherState.Success -> {
                 val weather = detailsWeatherState.weather
                 with(binding) {
-                    binding.loadingLayout.visibility = View.GONE
-                    binding.textViewLocality.text = currentLocality.locality
-                    binding.textViewCondition.text = weather.condition
-                    binding.textViewTemperature.text = weather.temp.toString()
-                    binding.textViewTemperatureFeelLike.text = weather.feels_like.toString()
-                    binding.textViewWindSpeed.text = weather.wind_speed.toString()
-                    binding.textViewWindDir.text = weather.wind_dir
-                    binding.textViewPressureMm.text = weather.pressure_mm.toString()
+                    loadingLayout.visibility = View.GONE
+                    textViewLocality.text = currentLocality.locality
+                    textViewCondition.text = weather.condition
+                    imageIcon.loadIconSvg("$YANDEX_ICON_DOMAIN${weather.icon}$IMAGE_FILE_FORMAT")
+                    textViewTemperature.text = weather.temp.toString()
+                    textViewTemperatureFeelLike.text = weather.feels_like.toString()
+                    textViewWindSpeed.text = weather.wind_speed.toString()
+                    textViewWindDir.text = weather.wind_dir
+                    textViewPressureMm.text = weather.pressure_mm.toString()
                 }
             }
         }
+    }
 
+    private fun ImageView.loadIconSvg(url: String) {
+        val icLoader = ImageLoader.Builder(this.context)
+            .componentRegistry { add(SvgDecoder(this@loadIconSvg.context)) }
+            .build()
+        val request = ImageRequest.Builder(this.context)
+            .crossfade(true)
+            .crossfade(500)
+            .data(url)
+            .target(this)
+            .build()
+        icLoader.enqueue(request)
     }
 
     private val receiver = object : BroadcastReceiver() {
