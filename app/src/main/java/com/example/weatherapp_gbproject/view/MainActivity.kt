@@ -1,13 +1,15 @@
 package com.example.weatherapp_gbproject.view
 
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp_gbproject.R
+import com.example.weatherapp_gbproject.repository.APP_PREFERENCES
 import com.example.weatherapp_gbproject.repository.ConnectionBroadcastReceiver
 import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_ACTIVITY_MSG
-
+import com.example.weatherapp_gbproject.repository.PREFERENCES_RUSSIAN_LOCALITY
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,5 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         val receiver = ConnectionBroadcastReceiver()
         registerReceiver(receiver, IntentFilter("android.intent.action.AIRPLANE_MODE"))
+
+
     }
 }

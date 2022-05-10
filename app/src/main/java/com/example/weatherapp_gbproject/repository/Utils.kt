@@ -14,6 +14,8 @@ const val KEY_BROADCAST_RECEIVER_WAVE = "from Activity"
 const val YANDEX_ICON_DOMAIN = "https://yastatic.net/weather/i/icons/funky/dark/"
 const val IMAGE_FILE_FORMAT = ".svg"
 const val KEY_NOTIFICATION_BROADCAST_RECEIVER_WAVE = "connection"
+const val APP_PREFERENCES = "fileAppPreferences"
+const val PREFERENCES_RUSSIAN_LOCALITY = "russian locality"
 
 class Utils {
 }

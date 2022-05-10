@@ -1,5 +1,6 @@
 package com.example.weatherapp_gbproject.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp_gbproject.R
 import com.example.weatherapp_gbproject.databinding.FragmentWeatherListBinding
+import com.example.weatherapp_gbproject.repository.APP_PREFERENCES
 import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_WEATHER
+import com.example.weatherapp_gbproject.repository.PREFERENCES_RUSSIAN_LOCALITY
 import com.example.weatherapp_gbproject.repository.WeatherInfo
 import com.example.weatherapp_gbproject.viewmodel.MainViewModel
 import com.example.weatherapp_gbproject.viewmodel.state.AppState
@@ -20,6 +23,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
     private var _binding: FragmentWeatherListBinding? = null
     private val binding get() = _binding!!
+
 
     private val weatherListAdapter: WeatherListAdapter by lazy {
         WeatherListAdapter(this)
@@ -42,19 +46,40 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initRecyclerView()
-        //ссылка на ответ, который в случае изменения/обновления объекта лайвдейты, вызовет рендер нового значения
         val observer =
             Observer<AppState> { data -> renderData(data) }
-        //подписка на лайвдейту мейнфрагментом, чтобы пока жив фрагмент, ловить изменения
         viewModel.getData().observe(viewLifecycleOwner, observer)
 
-        viewModel.getRussianWeather()
+    }
+
+
+    private fun saveLocalityPreferences(isRussian: Boolean) {
+        val localityPreferences =
+            activity?.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+        val editor = localityPreferences?.edit()
+        editor?.putBoolean(PREFERENCES_RUSSIAN_LOCALITY, isRussian)
+        editor?.apply()
+    }
+
+    private fun loadLocalityPreferences() {
+        activity?.let {
+            if (it.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE)
+                    .getBoolean(PREFERENCES_RUSSIAN_LOCALITY, isRussian)
+            ) {
+                renderLocality()
+            }else{
+                viewModel.getRussianWeather()
+            }
+        }
     }
 
     private fun initRecyclerView() {
         binding.recyclerView.adapter = weatherListAdapter
+        loadLocalityPreferences()
         binding.floatingActionButton.setOnClickListener {
+            saveLocalityPreferences(isRussian)
             renderLocality()
         }
     }
@@ -79,6 +104,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             )
         }
     }
+
 
     private fun renderData(data: AppState) {
         with(binding) {
