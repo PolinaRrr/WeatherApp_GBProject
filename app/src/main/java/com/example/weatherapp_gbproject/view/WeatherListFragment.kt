@@ -51,7 +51,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         val observer =
             Observer<AppState> { data -> renderData(data) }
         viewModel.getData().observe(viewLifecycleOwner, observer)
-
     }
 
 
@@ -69,7 +68,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
                     .getBoolean(PREFERENCES_RUSSIAN_LOCALITY, isRussian)
             ) {
                 renderLocality()
-            }else{
+            } else {
                 viewModel.getRussianWeather()
             }
         }
