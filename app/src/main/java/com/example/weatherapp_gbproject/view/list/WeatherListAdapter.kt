@@ -1,12 +1,12 @@
-package com.example.weatherapp_gbproject.view
+package com.example.weatherapp_gbproject.view.list
 
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp_gbproject.databinding.FragmentHistoryWeatherListRecycleItemBinding
 import com.example.weatherapp_gbproject.repository.WeatherInfo
-import com.example.weatherapp_gbproject.databinding.FragmentWeatherListRecycleItemBinding
 
 
 class WeatherListAdapter(
@@ -23,7 +23,7 @@ class WeatherListAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CityHolder {
-        val binding = FragmentWeatherListRecycleItemBinding.inflate(
+        val binding = FragmentHistoryWeatherListRecycleItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -38,7 +38,7 @@ class WeatherListAdapter(
 
     inner class CityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(weather: WeatherInfo) {
-            FragmentWeatherListRecycleItemBinding.bind(itemView)
+            FragmentHistoryWeatherListRecycleItemBinding.bind(itemView)
                 .apply { textViewCityName.text = weather.city.locality }
                 .run {
                     root.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.example.weatherapp_gbproject.view
+package com.example.weatherapp_gbproject.view.list
 
 import android.content.Context
 import android.os.Bundle
@@ -15,6 +15,7 @@ import com.example.weatherapp_gbproject.repository.APP_PREFERENCES
 import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_WEATHER
 import com.example.weatherapp_gbproject.repository.PREFERENCES_RUSSIAN_LOCALITY
 import com.example.weatherapp_gbproject.repository.WeatherInfo
+import com.example.weatherapp_gbproject.view.details.DetailsWeatherFragment
 import com.example.weatherapp_gbproject.viewmodel.MainViewModel
 import com.example.weatherapp_gbproject.viewmodel.state.AppState
 import com.google.android.material.snackbar.Snackbar

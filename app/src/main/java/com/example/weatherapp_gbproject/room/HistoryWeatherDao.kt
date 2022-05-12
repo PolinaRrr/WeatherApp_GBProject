@@ -31,5 +31,7 @@ interface HistoryWeatherDao {
     @Query("SELECT * FROM history")
     fun getInfo(): List<HistoryWeatherRequest>
 
+    @Query("SELECT * FROM history WHERE id_city=:id_city")
+    fun getHistoryForCity(id_city: Long): List<HistoryWeatherRequest>
 
 }

@@ -1,4 +1,4 @@
-package com.example.weatherapp_gbproject.view
+package com.example.weatherapp_gbproject.view.list
 
 import com.example.weatherapp_gbproject.repository.WeatherInfo
 

@@ -41,6 +41,8 @@ class DetailsViewModel(
         fun onError(responseState: ResponseState)
     }
 
+
+
     //TODO выпилить
     fun getLatCurrentLocality(currentLocality: String): Double {
         var lat = 0.0

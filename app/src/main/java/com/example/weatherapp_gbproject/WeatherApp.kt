@@ -16,6 +16,7 @@ class WeatherApp : Application() {
         private var db: WeatherDB? = null
         private var appContext: WeatherApp? = null
         fun getHistoryWeatherTable(): HistoryWeatherDao {
+
             if (db == null) {
                 if (appContext!=null){
                     db = Room.databaseBuilder(appContext!!,WeatherDB::class.java,"weather").build()

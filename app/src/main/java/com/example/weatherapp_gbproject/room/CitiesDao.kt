@@ -21,4 +21,20 @@ interface CitiesDao {
 
     @Query("SELECT locality FROM cities WHERE id=:id_city")
     fun getNameCity(id_city: Long):String
+
+    @Query("SELECT lat FROM cities WHERE id=:id_city")
+    fun getLatCity(id_city: Long):Double
+
+    @Query("SELECT lon FROM cities WHERE id=:id_city")
+    fun getLonCity(id_city: Long):Double
+
+    @Query("SELECT id FROM cities WHERE locality=:locality")
+    fun getIdCity(locality:String): Long
+
+    @Query("SELECT locality FROM cities WHERE isRussian=:isRussian")
+    fun getAllLocaleCities(isRussian:Boolean): List<String>
+
+    @Query("SELECT * FROM cities")
+    fun getAllCities():List<Cities>
+
 }
