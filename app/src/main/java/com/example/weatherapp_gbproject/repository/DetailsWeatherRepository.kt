@@ -9,4 +9,5 @@ interface DetailsWeatherRepository {
         callback: Callback,
         errorCallback: DetailsViewModel.ErrorCallback
     )
+
 }

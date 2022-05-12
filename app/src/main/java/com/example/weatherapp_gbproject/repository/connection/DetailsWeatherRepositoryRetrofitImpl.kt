@@ -11,7 +11,7 @@ import com.example.weatherapp_gbproject.repository.DetailsWeatherRepository
 import com.example.weatherapp_gbproject.repository.EXPERIMENTAL_DOMAIN
 import com.example.weatherapp_gbproject.repository.YANDEX_DOMAIN
 import com.example.weatherapp_gbproject.repository.dto.WeatherDTO
-import com.example.weatherapp_gbproject.view.DetailsWeatherFragment
+import com.example.weatherapp_gbproject.view.details.DetailsWeatherFragment
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
 import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
 import com.google.gson.GsonBuilder

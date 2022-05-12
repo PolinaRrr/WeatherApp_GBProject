@@ -1,4 +1,4 @@
-package com.example.weatherapp_gbproject.view
+package com.example.weatherapp_gbproject.view.details
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -85,7 +85,7 @@ class DetailsWeatherFragment : Fragment(), OnServerResponse, OnStateListener {
                     textViewLocality.text = currentLocality.locality
                     textViewCondition.text = weather.condition
                     imageIcon.loadIconSvg("$YANDEX_ICON_DOMAIN${weather.icon}$IMAGE_FILE_FORMAT")
-                    textViewTemperature.text = weather.temp.toString()
+                    textViewTemperature.text = weather.temperature.toString()
                     textViewTemperatureFeelLike.text = weather.feels_like.toString()
                     textViewWindSpeed.text = weather.wind_speed.toString()
                     textViewWindDir.text = weather.wind_dir
