@@ -22,11 +22,15 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
     }
 
     override fun getWeather(callback: HistoryViewModel.CallbackFullInfo) {
-        callback.onResponse(
-            DataConverter().convertHistoryTableToWeather(
-                WeatherApp.getHistoryWeatherTable().getInfo()
+        Thread{
+            callback.onResponse(
+
+                DataConverter().convertHistoryTableToWeather(
+                    WeatherApp.getHistoryWeatherTable().getInfo()
+                )
             )
-        )
+        }.start()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.N)

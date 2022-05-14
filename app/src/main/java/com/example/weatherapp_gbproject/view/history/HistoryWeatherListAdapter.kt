@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_gbproject.databinding.FragmentHistoryWeatherListRecycleItemBinding
 import com.example.weatherapp_gbproject.repository.WeatherInfo
-import com.example.weatherapp_gbproject.view.list.OnItemListClickListener
 
 
 class HistoryWeatherListAdapter(
-    private val onItemListClickListener: OnItemListClickListener,
     private var data: List<WeatherInfo> = listOf()
 ) :
     RecyclerView.Adapter<HistoryWeatherListAdapter.CityHolder>() {
