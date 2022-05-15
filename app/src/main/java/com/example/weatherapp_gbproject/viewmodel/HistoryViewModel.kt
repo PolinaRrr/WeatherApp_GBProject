@@ -21,6 +21,7 @@ class HistoryViewModel(
        repository.getWeather(object: CallbackFullInfo{
            override fun onResponse(listWeatherInfo: List<WeatherInfo>) {
                liveDate.postValue(AppState.Success(listWeatherInfo))
+
            }
        })
    }

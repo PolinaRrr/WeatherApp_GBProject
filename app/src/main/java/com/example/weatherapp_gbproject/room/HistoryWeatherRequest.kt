@@ -1,6 +1,7 @@
 package com.example.weatherapp_gbproject.room
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
@@ -10,6 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class HistoryWeatherRequest(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
+    @ColumnInfo(name = "date", defaultValue = "CURRENT_TIMESTAMP")
     val date: String,
     var id_city: Long,
     val temperature: Int,

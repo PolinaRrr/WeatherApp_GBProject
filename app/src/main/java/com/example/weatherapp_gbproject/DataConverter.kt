@@ -63,6 +63,6 @@ class DataConverter {
 
 @RequiresApi(Build.VERSION_CODES.N)
 fun getCurrentTime(): String {
-    return Calendar.getInstance().time.toString()
+    return Calendar.getInstance().time.toGMTString()
 }
 

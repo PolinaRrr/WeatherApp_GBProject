@@ -6,8 +6,7 @@ import com.example.weatherapp_gbproject.repository.dto.getListCities
 
 class CitiesTableFiller {
     companion object {
-        val listCities: List<CitiesDTO> = getListCities()
-
+        private val listCities: List<CitiesDTO> = getListCities()
         fun fillTablesCities() {
             for (i in listCities.indices) {
                 WeatherApp.getCitiesTable().insert(

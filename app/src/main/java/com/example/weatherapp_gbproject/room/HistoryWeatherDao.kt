@@ -1,15 +1,16 @@
 package com.example.weatherapp_gbproject.room
 
 import androidx.room.*
+import com.example.weatherapp_gbproject.repository.dto.HistoryDTO
 
 @Dao
 interface HistoryWeatherDao {
 
     @Query(
-        "INSERT INTO history (date,id_city,temperature,feels_like,condition,wind_speed,wind_dir,pressure_mm) VALUES (:date,:id_city,:temperature,:feels_like,:condition,:wind_speed,:wind_dir,:pressure_mm)"
+        "INSERT INTO history (id_city,temperature,feels_like,condition,wind_speed,wind_dir,pressure_mm) " +
+                "VALUES (:id_city,:temperature,:feels_like,:condition,:wind_speed,:wind_dir,:pressure_mm)"
     )
     fun insert(
-        date: String,
         id_city: Long,
         temperature: Int,
         feels_like: Int,
@@ -30,6 +31,19 @@ interface HistoryWeatherDao {
 
     @Query("SELECT * FROM history")
     fun getInfo(): List<HistoryWeatherRequest>
+
+    @Query("SELECT date, c.locality, temperature, feels_like, condition, wind_speed, wind_dir, pressure_mm " +
+            "FROM history AS h " +
+            "LEFT JOIN cities AS c ON h.id_city=c.id " +
+            "LIMIT 10")
+    fun getHistory(): List<HistoryDTO>
+
+    @Query("SELECT id_city FROM history")
+    fun getCityId(): Long
+
+    @Query("SELECT temperature FROM history")
+    fun getTemperature(): Int
+
 
     @Query("SELECT * FROM history WHERE id_city=:id_city")
     fun getHistoryForCity(id_city: Long): List<HistoryWeatherRequest>
