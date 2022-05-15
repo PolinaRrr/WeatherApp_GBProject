@@ -1,6 +1,7 @@
 package com.example.weatherapp_gbproject.room
 
 import androidx.room.*
+import com.example.weatherapp_gbproject.repository.dto.CoordinatesDTO
 
 @Dao
 interface CitiesDao {
@@ -24,11 +25,8 @@ interface CitiesDao {
     @Query("SELECT locality FROM cities WHERE id=:id_city")
     fun getNameCity(id_city: Long): String
 
-    @Query("SELECT lat FROM cities WHERE id=:id_city")
-    fun getLatCity(id_city: Long): Double
-
-    @Query("SELECT lon FROM cities WHERE id=:id_city")
-    fun getLonCity(id_city: Long): Double
+    @Query("SELECT lat,lon FROM cities WHERE locality=:locality")
+    fun getCoordinatesCity(locality: String): CoordinatesDTO
 
     @Query("SELECT id FROM cities WHERE locality=:locality")
     fun getIdCity(locality: String): Long

@@ -7,14 +7,15 @@ import com.example.weatherapp_gbproject.repository.dto.HistoryDTO
 interface HistoryWeatherDao {
 
     @Query(
-        "INSERT INTO history (id_city,temperature,feels_like,condition,wind_speed,wind_dir,pressure_mm) " +
-                "VALUES (:id_city,:temperature,:feels_like,:condition,:wind_speed,:wind_dir,:pressure_mm)"
+        "INSERT INTO history (id_city,temperature,feels_like,condition,icon,wind_speed,wind_dir,pressure_mm) " +
+                "VALUES (:id_city,:temperature,:feels_like,:condition,:icon,:wind_speed,:wind_dir,:pressure_mm)"
     )
     fun insert(
         id_city: Long,
         temperature: Int,
         feels_like: Int,
         condition: String,
+        icon: String,
         wind_speed: Double,
         wind_dir: String,
         pressure_mm: Int
@@ -32,10 +33,12 @@ interface HistoryWeatherDao {
     @Query("SELECT * FROM history")
     fun getInfo(): List<HistoryWeatherRequest>
 
-    @Query("SELECT date, c.locality, temperature, feels_like, condition, wind_speed, wind_dir, pressure_mm " +
-            "FROM history AS h " +
-            "LEFT JOIN cities AS c ON h.id_city=c.id " +
-            "LIMIT 10")
+    @Query(
+        "SELECT date, c.locality AS city_name, temperature, feels_like, condition, icon, wind_speed, wind_dir, pressure_mm " +
+                "FROM history AS h " +
+                "LEFT JOIN cities AS c ON h.id_city=c.id " +
+                "LIMIT 10"
+    )
     fun getHistory(): List<HistoryDTO>
 
     @Query("SELECT id_city FROM history")

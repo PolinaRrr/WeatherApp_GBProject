@@ -4,9 +4,10 @@ package com.example.weatherapp_gbproject.repository
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.weatherapp_gbproject.DataConverter
-import com.example.weatherapp_gbproject.WeatherApp
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
 import com.example.weatherapp_gbproject.viewmodel.HistoryViewModel
+import com.example.weatherapp_gbproject.room.HistoryManager
+
 
 class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherRepository, WeatherRepositoryAdd {
     override fun getWeatherDetails(
@@ -14,20 +15,14 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
         callback: DetailsViewModel.Callback,
         errorCallback: DetailsViewModel.ErrorCallback
     ) {
-        val list = DataConverter().convertHistoryTableToWeather(
-            WeatherApp.getHistoryWeatherTable()
-                .getHistoryForCity(WeatherApp.getCitiesTable().getIdCity(city.locality))
-        )
+        val list = DataConverter().convertHistoryToWeather(HistoryManager().lastHistory)
         callback.onResponse(list.last())
     }
 
     override fun getWeather(callback: HistoryViewModel.CallbackFullInfo) {
         Thread{
             callback.onResponse(
-
-                DataConverter().convertHistoryTableToWeather(
-                    WeatherApp.getHistoryWeatherTable().getInfo()
-                )
+                DataConverter().convertHistoryToWeather(HistoryManager().lastHistory)
             )
         }.start()
 
@@ -35,7 +30,7 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun addWeather(weatherInfo: WeatherInfo) {
-        WeatherApp.getHistoryWeatherTable().insert(DataConverter().convertWeatherToHistoryTable(weatherInfo))
+        DataConverter().convertWeatherToHistory(weatherInfo)
     }
 
 }

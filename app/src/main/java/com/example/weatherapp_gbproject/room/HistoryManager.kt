@@ -12,14 +12,17 @@ class HistoryManager {
     }
 
     fun putEntryToHistoryTable(history: HistoryDTO) {
-        WeatherApp.getHistoryWeatherTable().insert(
-            WeatherApp.getCitiesTable().getIdCity(history.city_name),
-            history.temperature,
-            history.feels_like,
-            history.condition,
-            history.wind_speed,
-            history.wind_dir,
-            history.pressure_mm
-        )
+        Thread{
+            WeatherApp.getHistoryWeatherTable().insert(
+                WeatherApp.getCitiesTable().getIdCity(history.city_name),
+                history.temperature,
+                history.feels_like,
+                history.condition,
+                history.icon,
+                history.wind_speed,
+                history.wind_dir,
+                history.pressure_mm
+            )
+        }.start()
     }
 }

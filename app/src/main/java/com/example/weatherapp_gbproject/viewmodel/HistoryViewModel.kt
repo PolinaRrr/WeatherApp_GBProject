@@ -22,6 +22,7 @@ class HistoryViewModel(
            override fun onResponse(listWeatherInfo: List<WeatherInfo>) {
                liveDate.postValue(AppState.Success(listWeatherInfo))
 
+               //тут выводим погоду в историю
            }
        })
    }
