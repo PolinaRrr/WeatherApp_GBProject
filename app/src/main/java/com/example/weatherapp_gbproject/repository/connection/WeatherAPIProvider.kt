@@ -16,4 +16,5 @@ interface WeatherAPIProvider {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double
     ): Call<WeatherDTO>
+
 }

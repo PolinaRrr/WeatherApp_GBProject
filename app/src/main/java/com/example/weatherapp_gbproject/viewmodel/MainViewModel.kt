@@ -21,6 +21,7 @@ class MainViewModel(
     fun getRussianWeather() = getWeather(true)
 
 
+
     @OptIn(DelicateCoroutinesApi::class)
     private fun getWeather(isRussianCity: Boolean) {
         GlobalScope.launch {
