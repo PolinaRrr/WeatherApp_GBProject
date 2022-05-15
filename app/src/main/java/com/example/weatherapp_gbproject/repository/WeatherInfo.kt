@@ -219,7 +219,18 @@ fun getRussianCities(): List<WeatherInfo> {
             3.0,
             "north",
             761
+        ),
+        WeatherInfo(
+            City("Saint-Petersburg", 59.938951, 30.315635),
+            19,
+            20,
+            "Cloudy",
+            "bkn_n",
+            3.0,
+            "north",
+            761
         )
+
     )
 
 }

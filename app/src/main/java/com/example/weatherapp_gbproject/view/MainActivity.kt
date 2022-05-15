@@ -12,7 +12,7 @@ import com.example.weatherapp_gbproject.repository.ConnectionBroadcastReceiver
 import com.example.weatherapp_gbproject.repository.KEY_BUNDLE_ACTIVITY_MSG
 import com.example.weatherapp_gbproject.view.history.HistoryWeatherListFragment
 import com.example.weatherapp_gbproject.view.list.WeatherListFragment
-
+import com.example.weatherapp_gbproject.room.CitiesTableFiller
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         }.start()
         Thread {
             WeatherApp.getCitiesTable().getAllCities()
+            if (WeatherApp.getCitiesTable().getAllCities().isEmpty()){
+                CitiesTableFiller.fillTablesCities()
+            }
         }.start()
     }
 
