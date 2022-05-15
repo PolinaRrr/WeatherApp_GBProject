@@ -15,14 +15,14 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
         callback: DetailsViewModel.Callback,
         errorCallback: DetailsViewModel.ErrorCallback
     ) {
-        val list = DataConverter().convertHistoryToWeather(HistoryManager().lastHistory)
+        val list = DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
         callback.onResponse(list.last())
     }
 
     override fun getWeather(callback: HistoryViewModel.CallbackFullInfo) {
         Thread{
             callback.onResponse(
-                DataConverter().convertHistoryToWeather(HistoryManager().lastHistory)
+                DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
             )
         }.start()
 
@@ -30,7 +30,9 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun addWeather(weatherInfo: WeatherInfo) {
-        DataConverter().convertWeatherToHistory(weatherInfo)
+        Thread{
+            HistoryManager().putEntryToHistoryTable(DataConverter().convertWeatherToHistory(weatherInfo))
+        }.start()
     }
 
 }

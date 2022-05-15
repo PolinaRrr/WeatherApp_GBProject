@@ -5,9 +5,9 @@ import com.example.weatherapp_gbproject.WeatherApp
 
 class HistoryManager {
 
-    val lastHistory: List<HistoryDTO> = getLastHistoryFromTables()
+  //  val lastHistory: List<HistoryDTO> = getLastHistoryFromTables()
 
-    private fun getLastHistoryFromTables(): List<HistoryDTO> {
+    fun getLastHistoryFromTables(): List<HistoryDTO> {
         return WeatherApp.getHistoryWeatherTable().getHistory()
     }
 

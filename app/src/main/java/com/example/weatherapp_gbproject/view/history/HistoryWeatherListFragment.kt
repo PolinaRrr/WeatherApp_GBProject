@@ -18,9 +18,7 @@ class HistoryWeatherListFragment : Fragment(),OnItemListClickListener {
     private val binding get() = _binding!!
 
 
-    private val weatherHistoryListAdapter: HistoryWeatherListAdapter by lazy {
-        HistoryWeatherListAdapter()
-    }
+    private val weatherHistoryListAdapter=HistoryWeatherListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +29,7 @@ class HistoryWeatherListFragment : Fragment(),OnItemListClickListener {
         return binding.root
     }
 
-    private var isRussian = true
+    //private var isRussian = true
 
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this).get(HistoryViewModel::class.java)
@@ -57,7 +55,7 @@ class HistoryWeatherListFragment : Fragment(),OnItemListClickListener {
                 }
                 is AppState.Success -> {
 
-                    weatherHistoryListAdapter.run { setData(data.weatherInfoList) }
+                    weatherHistoryListAdapter.setData(data.weatherInfoList)
                 }
             }
         }

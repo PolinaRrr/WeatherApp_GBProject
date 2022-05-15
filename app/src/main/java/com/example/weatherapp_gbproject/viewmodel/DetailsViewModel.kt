@@ -11,7 +11,8 @@ import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
 
 class DetailsViewModel(
     private val liveDate: MutableLiveData<DetailsWeatherState> = MutableLiveData(),
-    private val repository: DetailsWeatherRepository = DetailsWeatherRepositoryRetrofitImpl()
+    private val repository: DetailsWeatherRepository = DetailsWeatherRepositoryRetrofitImpl(),
+    private val repositoryAdd: WeatherRepositoryAdd = DetailsWeatherRepositoryRoomImpl()
 ) : ViewModel() {
 
     fun getLivedata() = liveDate
@@ -24,7 +25,9 @@ class DetailsViewModel(
                 liveDate.postValue(
                     DetailsWeatherState.Success(weatherInfo)
                 )
-                //тут записываем историю
+                //тут записываем в историю
+                repositoryAdd.addWeather(weatherInfo)
+
             },
             { responseState ->
                 liveDate.postValue(

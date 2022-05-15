@@ -14,10 +14,10 @@ import com.example.weatherapp_gbproject.room.CitiesManager
 import com.example.weatherapp_gbproject.repository.City
 
 class DataConverter {
-    fun convertDtoToModel(weatherDTO: WeatherDTO): WeatherInfo {
+    fun convertDtoToModel(weatherDTO: WeatherDTO, city: City): WeatherInfo {
         val factWeather: FactDTO = weatherDTO.fact
         return WeatherInfo(
-            getDefaultCity(),
+            city,
             factWeather.temp,
             factWeather.feelsLike,
             factWeather.condition,
@@ -32,9 +32,9 @@ class DataConverter {
     fun convertHistoryTableToWeather(historyTable: List<HistoryWeatherRequest>): List<WeatherInfo> {
         return historyTable.map {
             WeatherInfo(
-                City(HistoryManager().lastHistory[0].city_name,
-                    CitiesManager().getCoordinates(HistoryManager().lastHistory[0].city_name).lat,
-                    CitiesManager().getCoordinates(HistoryManager().lastHistory[0].city_name).lon),
+                City(HistoryManager().getLastHistoryFromTables()[0].city_name,
+                    CitiesManager().getCoordinates(HistoryManager().getLastHistoryFromTables()[0].city_name).lat,
+                    CitiesManager().getCoordinates(HistoryManager().getLastHistoryFromTables()[0].city_name).lon),
                 it.temperature,
                 it.feels_like,
                 it.condition,
@@ -49,11 +49,12 @@ class DataConverter {
 
     fun convertHistoryToWeather(historyTable: List<HistoryDTO>): List<WeatherInfo> {
         return historyTable.map {
+            val coords = CitiesManager().getCoordinates(it.city_name)
             WeatherInfo(
                 City(
-                    HistoryManager().lastHistory[0].city_name,
-                    CitiesManager().getCoordinates(HistoryManager().lastHistory[0].city_name).lat,
-                    CitiesManager().getCoordinates(HistoryManager().lastHistory[0].city_name).lon
+                    it.city_name,
+                    coords.lat,
+                    coords.lon
                 ),
                 it.temperature,
                 it.feels_like,

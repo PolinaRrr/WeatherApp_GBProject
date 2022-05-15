@@ -58,7 +58,7 @@ class DetailsWeatherRepositoryRetrofitImpl : DetailsWeatherRepository {
                             try {
                                 if (response.isSuccessful) {
                                     response.body()?.let {
-                                        callback.onResponse(DataConverter().convertDtoToModel(it))
+                                        callback.onResponse(DataConverter().convertDtoToModel(it, city))
                                     }
                                 }
                                 if (responseCode in 400..499) {
