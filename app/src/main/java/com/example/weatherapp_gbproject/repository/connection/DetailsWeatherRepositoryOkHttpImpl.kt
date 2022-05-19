@@ -35,6 +35,5 @@ class DetailsWeatherRepositoryOkHttpImpl : DetailsWeatherRepository {
                 Log.d("@@@","$city")
             }
         }.start()
-
     }
 }

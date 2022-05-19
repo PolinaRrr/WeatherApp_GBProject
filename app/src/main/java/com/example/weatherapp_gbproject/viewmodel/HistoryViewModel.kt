@@ -22,14 +22,17 @@ class HistoryViewModel(
            override fun onResponse(listWeatherInfo: List<WeatherInfo>) {
                liveDate.postValue(AppState.Success(listWeatherInfo))
 
-               //repository.ge
-
                //тут выводим погоду в историю
+           }
+
+           override fun OnFail() {
+               TODO("Not yet implemented")
            }
        })
    }
 
     interface CallbackFullInfo{
         fun onResponse(listWeatherInfo: List<WeatherInfo>)
+        fun OnFail()
     }
 }

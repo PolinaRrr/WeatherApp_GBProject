@@ -7,18 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weatherapp_gbproject.databinding.FragmentHistoryWeatherListBinding
 import com.example.weatherapp_gbproject.view.list.OnItemListClickListener
 import com.example.weatherapp_gbproject.viewmodel.HistoryViewModel
 import com.example.weatherapp_gbproject.viewmodel.state.AppState
 
-class HistoryWeatherListFragment : Fragment(),OnItemListClickListener {
+class HistoryWeatherListFragment : Fragment(), OnItemListClickListener {
 
     private var _binding: FragmentHistoryWeatherListBinding? = null
     private val binding get() = _binding!!
 
 
-    private val weatherHistoryListAdapter=HistoryWeatherListAdapter()
+    private val weatherHistoryListAdapter = HistoryWeatherListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,14 +30,16 @@ class HistoryWeatherListFragment : Fragment(),OnItemListClickListener {
         return binding.root
     }
 
-    //private var isRussian = true
-
     private val viewModel: HistoryViewModel by lazy {
         ViewModelProvider(this).get(HistoryViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.recyclerView.also {
+            it.adapter = weatherHistoryListAdapter
+            it.layoutManager = LinearLayoutManager(requireContext())
+        }
 
         val observer =
             Observer<AppState> { data -> renderData(data) }
@@ -60,7 +63,6 @@ class HistoryWeatherListFragment : Fragment(),OnItemListClickListener {
             }
         }
     }
-
 
 
     override fun onDestroy() {

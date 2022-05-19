@@ -9,18 +9,20 @@ import com.example.weatherapp_gbproject.viewmodel.HistoryViewModel
 import com.example.weatherapp_gbproject.room.HistoryManager
 
 
-class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherRepository, WeatherRepositoryAdd {
+class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherRepository,
+    WeatherRepositoryAdd {
     override fun getWeatherDetails(
         city: City,
         callback: DetailsViewModel.Callback,
         errorCallback: DetailsViewModel.ErrorCallback
     ) {
-        val list = DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
+        val list =
+            DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
         callback.onResponse(list.last())
     }
 
     override fun getWeather(callback: HistoryViewModel.CallbackFullInfo) {
-        Thread{
+        Thread {
             callback.onResponse(
                 DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
             )
@@ -30,8 +32,12 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun addWeather(weatherInfo: WeatherInfo) {
-        Thread{
-            HistoryManager().putEntryToHistoryTable(DataConverter().convertWeatherToHistory(weatherInfo))
+        Thread {
+            HistoryManager().putEntryToHistoryTable(
+                DataConverter().convertWeatherToHistory(
+                    weatherInfo
+                )
+            )
         }.start()
     }
 
