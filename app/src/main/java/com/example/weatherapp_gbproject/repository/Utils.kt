@@ -17,9 +17,9 @@ const val KEY_NOTIFICATION_BROADCAST_RECEIVER_WAVE = "connection"
 const val APP_PREFERENCES = "fileAppPreferences"
 const val PREFERENCES_RUSSIAN_LOCALITY = "russian locality"
 
-const val CELSIUS_DEGREE = "°C "
-const val WIND_SPEED = "mps "
-const val ATMOSPHERIC_PRESSURE = "mmHg "
+const val CELSIUS_DEGREE = "°C"
+const val WIND_SPEED = "mps"
+const val ATMOSPHERIC_PRESSURE = "mmHg"
 
 class Utils {
 }

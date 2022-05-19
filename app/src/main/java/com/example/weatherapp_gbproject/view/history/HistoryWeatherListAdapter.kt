@@ -42,7 +42,7 @@ class HistoryWeatherListAdapter(
             FragmentHistoryWeatherListRecycleItemBinding.bind(itemView)
                 .apply {
                     textViewCityName.text = weather.city.locality
-                    textViewTemp.text = "${weather.temperature}$CELSIUS_DEGREE/ "
+                    textViewTemp.text = "${weather.temperature}$CELSIUS_DEGREE "
                     textViewFeelLikeTemp.text = "${weather.feels_like}$CELSIUS_DEGREE "
                     textViewCondition.text = weather.condition
                     textViewWindSpeed.text = "${weather.wind_speed}$WIND_SPEED "
