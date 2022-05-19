@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp_gbproject.databinding.FragmentHistoryWeatherListRecycleItemBinding
 import com.example.weatherapp_gbproject.repository.WeatherInfo
-
+import com.example.weatherapp_gbproject.repository.CELSIUS_DEGREE
+import com.example.weatherapp_gbproject.repository.WIND_SPEED
+import com.example.weatherapp_gbproject.repository.ATMOSPHERIC_PRESSURE
 
 class HistoryWeatherListAdapter(
     private var data: List<WeatherInfo> = listOf()
@@ -40,12 +42,12 @@ class HistoryWeatherListAdapter(
             FragmentHistoryWeatherListRecycleItemBinding.bind(itemView)
                 .apply {
                     textViewCityName.text = weather.city.locality
-                    textViewTemp.text = weather.temperature.toString()
-                    textViewFeelLikeTemp.text = weather.feels_like.toString()
+                    textViewTemp.text = "${weather.temperature}$CELSIUS_DEGREE/ "
+                    textViewFeelLikeTemp.text = "${weather.feels_like}$CELSIUS_DEGREE "
                     textViewCondition.text = weather.condition
-                    textViewWindSpeed.text = weather.wind_speed.toString()
+                    textViewWindSpeed.text = "${weather.wind_speed}$WIND_SPEED "
                     textViewWindDir.text = weather.wind_dir
-                    textViewPressure.text = weather.pressure_mm.toString()
+                    textViewPressure.text = "${weather.pressure_mm}$ATMOSPHERIC_PRESSURE "
                 }
         }
     }
