@@ -1,6 +1,5 @@
 package com.example.weatherapp_gbproject.repository
 
-import com.example.weatherapp_gbproject.room.CitiesManager
 
 class LocalRepositoryImpl : LocalRepository {
 

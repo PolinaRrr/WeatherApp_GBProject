@@ -22,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+import com.example.weatherapp_gbproject.repository.DetailsWeatherRepositoryRoomImpl
 
 class DetailsWeatherRepositoryRetrofitImpl : DetailsWeatherRepository {
 
@@ -58,9 +58,15 @@ class DetailsWeatherRepositoryRetrofitImpl : DetailsWeatherRepository {
                             try {
                                 if (response.isSuccessful) {
                                     response.body()?.let {
-                                        callback.onResponse(DataConverter().convertDtoToModel(it, city))
+                                        callback.onResponse(
+                                            DataConverter().convertDtoToModel(
+                                                it,
+                                                city
+                                            )
+                                        )
                                     }
                                 }
+
                                 if (responseCode in 400..499) {
                                     errorCallback.onError(
                                         ResponseState.ErrorConnectionFromClient(

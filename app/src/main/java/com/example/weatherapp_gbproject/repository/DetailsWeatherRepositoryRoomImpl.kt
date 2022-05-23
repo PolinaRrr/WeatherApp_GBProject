@@ -7,6 +7,8 @@ import com.example.weatherapp_gbproject.DataConverter
 import com.example.weatherapp_gbproject.viewmodel.DetailsViewModel
 import com.example.weatherapp_gbproject.viewmodel.HistoryViewModel
 import com.example.weatherapp_gbproject.room.HistoryManager
+import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
+import java.net.ConnectException
 
 
 class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherRepository,
@@ -18,7 +20,11 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
     ) {
         val list =
             DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
-        callback.onResponse(list.last())
+        if (list.isEmpty()) {
+            errorCallback.onError(ResponseState.ErrorFatal(ConnectException()))
+        } else {
+            callback.onResponse(list.last())
+        }
     }
 
     override fun getWeather(callback: HistoryViewModel.CallbackFullInfo) {
@@ -27,7 +33,6 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
                 DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
             )
         }.start()
-
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
