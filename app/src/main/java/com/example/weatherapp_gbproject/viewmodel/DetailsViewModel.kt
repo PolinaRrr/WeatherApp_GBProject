@@ -1,11 +1,7 @@
 package com.example.weatherapp_gbproject.viewmodel
 
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,15 +9,14 @@ import com.example.weatherapp_gbproject.repository.*
 import com.example.weatherapp_gbproject.repository.connection.DetailsWeatherRepositoryRetrofitImpl
 import com.example.weatherapp_gbproject.viewmodel.state.DetailsWeatherState
 import com.example.weatherapp_gbproject.viewmodel.state.ResponseState
-import com.yandex.runtime.Runtime.getApplicationContext
 
 
 class DetailsViewModel(
     private val liveDate: MutableLiveData<DetailsWeatherState> = MutableLiveData(),
-    private val repositoryAdd: WeatherRepositoryAdd = DetailsWeatherRepositoryRoomImpl()
+    private val historyWeatherRepository: WeatherRepositoryAdd = DetailsWeatherRepositoryRoomImpl()
 ) : ViewModel() {
 
-    private var repository: DetailsWeatherRepository = DetailsWeatherRepositoryRetrofitImpl()
+    private var actualWeatherRepository: DetailsWeatherRepository = DetailsWeatherRepositoryRetrofitImpl()
 
     fun getLivedata() = liveDate
 
@@ -33,17 +28,27 @@ class DetailsViewModel(
         Есть только 2 варианта развития событий: или смогли подключиться к серверу яндекса и получили погоду, или нет.
         Все кейсы, когда мы не смогли подключиться обрабатываются в DetailsWeatherRepositoryRetrofitImpl через catch или по  responseCode
          */
-        repository.getWeatherDetails(
+        actualWeatherRepository.getWeatherDetails(
             city,
             { weatherInfo ->
                 liveDate.postValue(
                     DetailsWeatherState.Success(weatherInfo)
                 )
-                repositoryAdd.addWeather(weatherInfo)
+                historyWeatherRepository.addWeather(weatherInfo)
             },
             { responseState ->
-                liveDate.postValue(
-                    DetailsWeatherState.Error(responseState)
+                historyWeatherRepository.getWeatherDetails(
+                    city,
+                    { weatherInfo ->
+                        liveDate.postValue(
+                            DetailsWeatherState.Success(weatherInfo)
+                        )
+                    },
+                    { responseStateNew ->
+                        liveDate.postValue(
+                            DetailsWeatherState.Error(responseStateNew)
+                        )
+                    }
                 )
             }
         )

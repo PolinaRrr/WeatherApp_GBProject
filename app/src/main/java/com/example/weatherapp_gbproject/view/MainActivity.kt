@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_history -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container, HistoryWeatherListFragment.newInstance()).commit()
+                    .replace(R.id.main_container, HistoryWeatherListFragment.newInstance()).addToBackStack("").commit()
             }
         }
         return super.onOptionsItemSelected(item)

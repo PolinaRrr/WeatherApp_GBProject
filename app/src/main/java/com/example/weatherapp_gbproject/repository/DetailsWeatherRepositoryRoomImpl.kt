@@ -18,13 +18,15 @@ class DetailsWeatherRepositoryRoomImpl : DetailsWeatherRepository, WeatherReposi
         callback: DetailsViewModel.Callback,
         errorCallback: DetailsViewModel.ErrorCallback
     ) {
-        val list =
-            DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
-        if (list.isEmpty()) {
-            errorCallback.onError(ResponseState.ErrorFatal(ConnectException()))
-        } else {
-            callback.onResponse(list.last())
-        }
+        Thread{
+            val list =
+                DataConverter().convertHistoryToWeather(HistoryManager().getLastHistoryFromTables())
+            if (list.isEmpty()) {
+                errorCallback.onError(ResponseState.ErrorFatal(ConnectException()))
+            } else {
+                callback.onResponse(list.last())
+            }
+        }.start()
     }
 
     override fun getWeather(callback: HistoryViewModel.CallbackFullInfo) {
